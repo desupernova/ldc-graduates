@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import CynefinSVG from "./CynefinSVG";
+import CynefinSVG from "./CynefinSVGNuevo";
 import ScrollyBGTop from "./ScrollyBGTop";
 import ScrollyCirculo from "./ScrollyCirculo";
 import ScrollyTelling from "./ScrollyTelling";
@@ -41,8 +41,21 @@ export default function StartScreen() {
 
   return (
     <>
-      <div className="flex items-center justify-center max-w-screen h-screen overflow-x-hidden">
-        <CynefinSVG />
+      <div className="relative w-full h-screen overflow-x-hidden mt-8">
+        {/* Imagen de fondo */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/hero-bg.png"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        {/* SVG full width */}
+        <div className="relative z-10 w-full h-full">
+          <CynefinSVG />
+        </div>
       </div>
 
       {/* Sección de contenido explicativo */}
