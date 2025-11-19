@@ -179,7 +179,6 @@ export default function ScrollyTelling() {
           >
             <h2 
               className="text-[88px] font-serif text-center text-ldc-desorden"
-              style={{ fontFamily: "Georgia, serif" }}
             >
               Desorden
             </h2>
@@ -196,7 +195,6 @@ export default function ScrollyTelling() {
           >
             <h2 
               className="text-[88px] font-serif text-ldc-complejo"
-              style={{ fontFamily: "Georgia, serif" }}
             >
               Complejo
             </h2>
@@ -212,7 +210,6 @@ export default function ScrollyTelling() {
           >
             <h2 
               className="text-[88px] font-serif text-right text-ldc-complicado"
-              style={{ fontFamily: "Georgia, serif" }}
             >
               Complicado
             </h2>
@@ -228,7 +225,6 @@ export default function ScrollyTelling() {
           >
             <h2 
               className="text-[88px] font-serif text-right text-ldc-simple"
-              style={{ fontFamily: "Georgia, serif" }}
             >
               Simple
             </h2>
@@ -244,7 +240,6 @@ export default function ScrollyTelling() {
           >
             <h2 
               className="text-[88px] font-serif text-ldc-caotico"
-              style={{ fontFamily: "Georgia, serif" }}
             >
               Caótico
             </h2>
@@ -286,7 +281,6 @@ export default function ScrollyTelling() {
               <div
                 className="w-1/5 italic"
                 style={{ 
-                  fontFamily: "Georgia, serif",
                   transform: `translateX(${opacity < 0.1 ? -20 : 0}px)`,
                   transition: "transform 0.3s ease-out",
                 }}
@@ -298,7 +292,6 @@ export default function ScrollyTelling() {
               <div
                 className="w-1/5 italic"
                 style={{ 
-                  fontFamily: "Georgia, serif",
                   transform: `translateX(${opacity < 0.1 ? 20 : 0}px)`,
                   transition: "transform 0.3s ease-out",
                 }}
@@ -330,8 +323,7 @@ export default function ScrollyTelling() {
           {/* Texto centrado debajo del título Desorden */}
           <div
             className="w-full italic text-center"
-            style={{ 
-              fontFamily: "Georgia, serif",
+              style={{
               transform: `translateY(${desordenTextOpacity < 0.1 ? 20 : 0}px)`,
               transition: "transform 0.3s ease-out",
             }}

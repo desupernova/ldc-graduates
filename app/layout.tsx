@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
   title: "Trivia Challenge",
@@ -21,8 +15,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${inter.variable} font-sans antialiased`}
+        className="antialiased"
       >
+        <Navbar />
         {children}
       </body>
     </html>

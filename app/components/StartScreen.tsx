@@ -76,8 +76,9 @@ export default function StartScreen({ onStart }: StartScreenProps) {
       <div className="w-full py-16 relative z-10">
         <div className="max-w-[1200px] mx-auto px-4">
           {/* Título */}
-          <h1 className="text-[88px] font-serif leading-[72px] mb-0 px-12 block" style={{ fontFamily: 'Georgia, serif' }}>
-            Bienvenid@
+          <h1 className="text-[88px] font-serif leading-[72px] mb-0 px-12 block">
+            La gestión <br/>
+            no es sencilla
           </h1>
 
           {/* Contenedor blanco con SVG y texto */}
@@ -93,13 +94,14 @@ export default function StartScreen({ onStart }: StartScreenProps) {
             </div>
 
             {/* Texto explicativo - 2/3 del ancho */}
-            <div className="w-2/3 text-[18px] leading-relaxed my-auto" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
-                Aquí va el texto explicativo sobre el Marco Cynefin. <br /><br />
-
-                Este texto puede incluir información
-                sobre los diferentes dominios del marco: Simple, Complicado, Complejo y Caótico.
-                El contenido se puede personalizar según las necesidades específicas.
+              Te invitamos a fortalecer tu capacidad para planificar, estimar y gestionar de manera efectiva.  En esta sesion, vas a adquirir técnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes. 
+              <br/>
+              <br/>
+              A la hora de gestionar podemos encontrarnos en distintos tipos de entornos: inclusive dentro de LDC, existen distintos proyectos qué exigen enfoques diferenciados de acuerdo al contexto. 
+              <br/><br/>
+              El marco Cynefin,  desarrollado por Dave Snowden,  nos propone una visualización sencilla y esquemática para empezar a pensar nuestra estrategia:
               </p>
             </div>
 
@@ -154,7 +156,7 @@ export default function StartScreen({ onStart }: StartScreenProps) {
             </div>
           </div> */}
 
-          <h1 className="text-[88px] text-center font-serif leading-[72px] mb-24 px-12 block relative z-10" style={{ fontFamily: 'Georgia, serif' }}>
+          <h1 className="text-[88px] text-center font-serif leading-[72px] mb-24 px-12 block relative z-10">
             Marco <br />
             <i>Cynefin.</i>
           </h1>
@@ -169,10 +171,10 @@ export default function StartScreen({ onStart }: StartScreenProps) {
 
           <div className="flex gap-8 max-w-[1100px] mx-auto mb-40">
             {/* Texto explicativo - 2/3 del ancho */}
-            <div className="w-2/3 text-[18px] leading-relaxed my-auto" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
-                Ahora bien: en la vida real, no siempre resulta tan simple determinar en qué dominio nos encontramos. <br /><br />
-                Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
+                Ahora bien: en la vida real, no siempre resulta tan simple determinar en qué dominio nos encontramos. <br /><br />
+                Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
               </p>
             </div>
             <div className="w-1/3 flex-shrink-0">

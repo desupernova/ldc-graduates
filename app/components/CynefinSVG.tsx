@@ -147,7 +147,7 @@ export default function CynefinSVG({
         className="w-full h-full"
       >
         <g id="Desktop - 18" clip-path="url(#clip0_2011_2220)">
-          <rect width="1584" height="935" fill="black" />
+          <rect width="1584" height="935" fill="#5D6770" />
           <g id="image 18" style={{ mixBlendMode: "screen" }}>
             <rect x="1189.38" y="-6.02734" width="430.366" height="537.958" fill="url(#pattern0_2011_2220)" />
           </g>
