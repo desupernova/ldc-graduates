@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const isGithubPages = process.env.GITHUB_PAGES === "true";
 // Cambia esto si el nombre del repo en GitHub es diferente
-const repoName = "ldc-digexp";
+const repoName = "ldc-graduates";
 
 const nextConfig: NextConfig = {
   output: "export",
