@@ -1,15 +1,79 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import CynefinSVG from "./CynefinSVGNuevo";
-import ScrollyBGTop from "./ScrollyBGTop";
-import ScrollyCirculo from "./ScrollyCirculo";
 import ScrollyTelling from "./ScrollyTelling";
 import Trivia from "./Trivia";
 
 export default function StartScreen() {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const scrollyRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const triviaRef = useRef<HTMLDivElement>(null);
+  const [playCount, setPlayCount] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isInTrivia, setIsInTrivia] = useState(false);
 
+  // Detectar cuando el usuario está en la trivia y detectar scroll hacia arriba
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Verificar si estamos en la sección de trivia
+      if (triviaRef.current) {
+        const triviaRect = triviaRef.current.getBoundingClientRect();
+        const isCurrentlyInTrivia = triviaRect.top < window.innerHeight && triviaRect.bottom > 0;
+        
+        if (isCurrentlyInTrivia && !isInTrivia) {
+          setIsInTrivia(true);
+        } else if (!isCurrentlyInTrivia && isInTrivia) {
+          setIsInTrivia(false);
+        }
+        
+        // Si estamos en la trivia y el usuario hace scroll hacia arriba,
+        // reproducir el video (solo si no está reproduciéndose actualmente)
+        if (isCurrentlyInTrivia && currentScrollY < lastScrollY) {
+          const video = videoRef.current;
+          if (video && (video.paused || video.ended)) {
+            // Reproducir el video si está pausado o terminado
+            video.play();
+          }
+        }
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, isInTrivia]);
+
+  // Controlar las reproducciones del video
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleEnded = () => {
+      // Solo contar reproducciones automáticas (las primeras 2)
+      // No contar la reproducción adicional por scroll
+      if (playCount < 2) {
+        const newCount = playCount + 1;
+        setPlayCount(newCount);
+        
+        if (newCount < 2) {
+          // Reproducir de nuevo si aún no hemos alcanzado el límite de 2
+          video.play();
+        }
+        // Si newCount >= 2, el video se detiene automáticamente
+      }
+    };
+
+    video.addEventListener("ended", handleEnded);
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+    };
+  }, [playCount]);
 
   useEffect(() => {
     const handleParallax = () => {
@@ -71,6 +135,7 @@ export default function StartScreen() {
           <div
             ref={parallaxRef}
             className="bg-white rounded-[24px] p-8 flex gap-8 relative z-10 will-change-transform mb-[40vh]"
+            style={{ zIndex: 1000 }}
           >
             {/* SVG - 1/3 del ancho */}
             <div className="w-1/3 flex-shrink-0">
@@ -97,50 +162,6 @@ export default function StartScreen() {
 
 
         <div className="relative">
-          {/* Fondo sticky que scrollea con el título y luego se queda fijo */}
-          <div
-            className="sticky top-0 left-0 right-0 z-0 pointer-events-none"
-            style={{
-              height: '30vh'
-            }}
-          >
-            <div
-              className="w-full"
-              style={{
-                transform: 'translateY(-60%)', // Desplazar hacia arriba para mostrar el 30% inferior
-                height: '100vh',
-                width: '100%'
-              }}
-            >
-              <ScrollyBGTop className="mx-auto w-full" style={{ height: '100vh', width: '100%' }} />
-            </div>
-          </div>
-
-          {/* <div
-            ref={bottomSectionRef}
-            className={`  
-              ${isBottomSticky ? 'sticky top-0 ' : 'sticky bottom-0 mb-[300vh]'} 
-              left-0 right-0 z-0 pointer-events-none`}
-
-            // className={`${isBottomSticky ? 'absolute bottom-0' : 'sticky bottom-0'} top-0 left-0 right-0 z-0 pointer-events-none`}
-            style={{
-              height: '30vh'
-            }}
-          >
-            <div
-              className="w-full flex justify-end"
-              style={{
-                transform: 'translateY(60%)', // Desplazar hacia abajo para mostrar el 30% superior
-                height: '100vh',
-                width: '100%'
-              }}
-            >
-              <ScrollyBGBottom
-                className=""
-                style={{ width: '50%', marginRight: 'auto' }}
-              />
-            </div>
-          </div> */}
 
           <h1 className="text-[88px] text-center font-serif leading-[72px] mb-24 px-12 block relative z-10">
             Marco <br />
@@ -155,7 +176,7 @@ export default function StartScreen() {
           {/* Fondo sticky que scrollea con el contenido y luego se queda fijo en la parte inferior */}
           
 
-          <div className="flex gap-8 max-w-[1100px] mx-auto mb-40">
+          <div className="flex gap-8 max-w-[1100px] mx-auto mb-40 mt-[50vh]">
             {/* Texto explicativo - 2/3 del ancho */}
             <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
@@ -163,15 +184,23 @@ export default function StartScreen() {
                 Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
               </p>
             </div>
-            <div className="w-1/3 flex-shrink-0">
-              <Image src={"cynefin-esquema-blanco.png"}
-                width={250} height={250} alt="Esquema Cynefin" className="mx-auto w-full px-12 py-12" />
-
+            <div className="w-1/3 flex-shrink-0 p-10">
+              <video 
+                ref={videoRef}
+                autoPlay 
+                muted 
+                playsInline
+              >
+                <source src="/instrucciones.webm" type="video/webm" />
+                <source src="/instrucciones.mp4" type="video/mp4" /> 
+              </video>
             </div>
           </div>
 
           {/* Componente de Trivia */}
-          <Trivia />
+          <div ref={triviaRef}>
+            <Trivia />
+          </div>
 
         </div>
       </div>

@@ -34,6 +34,10 @@ export default function ScrollyTelling() {
   const [finalStepOpacity, setFinalStepOpacity] = useState(0);
   const [desordenOpacity, setDesordenOpacity] = useState(0);
   const [desordenTextOpacity, setDesordenTextOpacity] = useState(0);
+  const [imagesOpacity, setImagesOpacity] = useState(1);
+  const [finalTextsOpacity, setFinalTextsOpacity] = useState(0);
+  const [isContainerPassed, setIsContainerPassed] = useState(false);
+  const [hasReachedFinalStep, setHasReachedFinalStep] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const desordenTextRef = useRef<HTMLDivElement | null>(null);
@@ -49,17 +53,31 @@ export default function ScrollyTelling() {
       const container = containerRef.current;
       const rect = container.getBoundingClientRect();
       const containerTop = rect.top;
-      const totalHeight = windowHeight * 7; // 700vh total: 100vh blanco + 100vh desorden + 400vh contenido + 100vh final
+      const totalHeight = windowHeight * 8; // 800vh total: 100vh blanco + 100vh desorden + 400vh contenido + 100vh final anterior + 100vh nuevo paso final
       
       // Paso 1 (0-100vh): Blanco - solo círculo
       const scrollProgress = (windowHeight - containerTop) / totalHeight;
-      const isInFirstStep = scrollProgress < (1/7); // 100vh / 700vh = 0.143
+      const isInFirstStep = scrollProgress < (1/8); // 100vh / 800vh = 0.125
       setIsFirstStep(isInFirstStep);
       
+      // Controlar opacidad de las imágenes: bajan cuando entrás al primer paso, suben cuando salís del último
+      if (isInFirstStep) {
+        // Bajar opacidad gradualmente al entrar al primer paso
+        const firstStepProgress = scrollProgress / (1/8);
+        setImagesOpacity(Math.max(0.3, 1 - firstStepProgress * 0.7));
+      } else if (scrollProgress >= (7/8)) {
+        // Subir opacidad cuando salimos del último paso
+        const exitProgress = (scrollProgress - (7/8)) / (1/8);
+        setImagesOpacity(Math.min(1, 0.3 + exitProgress * 0.7));
+      } else {
+        // Mantener opacidad baja durante el scrolly
+        setImagesOpacity(0.3);
+      }
+      
       // Paso 2 (100-200vh): Desorden - aparece y desaparece
-      const isInDesordenStep = scrollProgress >= (1/7) && scrollProgress < (2/7); // 100-200vh
+      const isInDesordenStep = scrollProgress >= (1/8) && scrollProgress < (2/8); // 100-200vh
       if (isInDesordenStep) {
-        const desordenStepProgress = (scrollProgress - (1/7)) / (1/7); // Normalizar a 0-1 dentro del paso desorden
+        const desordenStepProgress = (scrollProgress - (1/8)) / (1/8); // Normalizar a 0-1 dentro del paso desorden
         // Hacer que aparezca y desaparezca: aparece al inicio, desaparece al final
         const fadeInOut = Math.sin(desordenStepProgress * Math.PI);
         setDesordenOpacity(Math.max(0, fadeInOut));
@@ -92,16 +110,40 @@ export default function ScrollyTelling() {
       }
       
       // Detectar si estamos en el último step (después de Caótico, últimos 100vh)
-      // Caótico va de 500-650vh (150vh), entonces el paso final empieza en 650vh
-      const isInFinalStep = scrollProgress > (6.5/7); // 650vh / 700vh = 0.929
+      // Caótico va de 500-650vh (150vh), entonces el paso final anterior empieza en 650vh
+      // El nuevo paso final empieza en 700vh (7/8)
+      const isInFinalStep = scrollProgress >= (7/8); // 700vh / 800vh = 0.875
       setIsFinalStep(isInFinalStep);
-
-      // Calcular opacidad del último step (todos los títulos visibles)
+      
+      // Rastrear si alguna vez llegamos al paso final
       if (isInFinalStep) {
-        const finalStepProgress = (scrollProgress - (6.5/7)) / (0.5/7); // Normalizar a 0-1 dentro de los primeros 50vh del paso final
+        setHasReachedFinalStep(true);
+      }
+
+      // Calcular opacidad del último step anterior (todos los títulos visibles)
+      if (scrollProgress > (6.5/8) && scrollProgress < (7/8)) {
+        const finalStepProgress = (scrollProgress - (6.5/8)) / (0.5/8); // Normalizar a 0-1 dentro de los primeros 50vh del paso final anterior
         setFinalStepOpacity(Math.min(1, finalStepProgress * 2)); // Fade in rápido en los primeros 50vh
       } else {
         setFinalStepOpacity(0);
+      }
+      
+      // Detectar si el contenedor ya pasó completamente
+      const containerBottom = containerTop + (windowHeight * 8);
+      const hasPassed = containerBottom < 0;
+      setIsContainerPassed(hasPassed);
+      
+      // Calcular opacidad de los textos finales (4 cuadrantes)
+      // Solo se muestran en el último paso (700-800vh) o después de haber pasado completamente el scrolly (si ya llegamos al paso final)
+      if (isInFinalStep) {
+        const finalTextsProgress = (scrollProgress - (7/8)) / (1/8); // Normalizar a 0-1 dentro del paso final
+        setFinalTextsOpacity(Math.min(1, finalTextsProgress * 2)); // Fade in rápido
+      } else if (hasPassed && hasReachedFinalStep) {
+        // Solo mantener visibles si ya pasamos por el paso final y ahora el contenedor ya pasó
+        setFinalTextsOpacity(1);
+      } else {
+        // Ocultar en todos los demás casos
+        setFinalTextsOpacity(0);
       }
 
       // Calcular la opacidad de cada sección de texto basándose en su distancia al centro del viewport
@@ -150,14 +192,47 @@ export default function ScrollyTelling() {
     <div 
       ref={containerRef}
       className="relative"
-      style={{ height: "700vh" }} // 100vh blanco + 100vh desorden + 400vh contenido + 100vh final
+      style={{ height: "800vh" }} // 100vh blanco + 100vh desorden + 400vh contenido + 100vh final anterior + 100vh nuevo paso final
     >
       {/* Contenedor fijo para el círculo y títulos */}
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden pointer-events-none z-10">
+      <div 
+        className="sticky top-0 h-screen flex items-center justify-center pointer-events-none z-10"
+      >
+        {/* Imagen superior - fondo estático */}
         <div 
-          className="relative w-full max-w-[1200px] mx-auto px-8"
+          className="absolute top-[-85vh] left-0 right-0 z-0 pointer-events-none"
+          style={{
+            opacity: (isContainerPassed && hasReachedFinalStep) ? 0 : imagesOpacity,
+            transition: "opacity 0.3s ease-out",
+          }}
+        >
+          <img 
+            src="/scrolly-top.png" 
+            alt="" 
+            className="w-full h-auto"
+          />
+        </div>
+
+        {/* Imagen inferior - fondo estático */}
+        <div 
+          className="absolute bottom-[-45vh] left-0 right-0 z-8 pointer-events-none"
+          style={{
+            opacity: (isContainerPassed && hasReachedFinalStep) ? 0 : imagesOpacity,
+            transition: "opacity 0.3s ease-out",
+          }}
+        >
+          <img 
+            src="/scrolly-bot.png" 
+            alt="" 
+            className="w-2/3 h-auto"
+          />
+        </div>
+
+        <div 
+          className="relative w-full max-w-[1200px] mx-auto px-8 z-8"
           style={{
             transition: "opacity 0.3s ease-out",
+            opacity: isContainerPassed && hasReachedFinalStep ? 0 : 1,
           }}
         >
           {/* Círculo central */}
@@ -243,6 +318,74 @@ export default function ScrollyTelling() {
             >
               Caótico
             </h2>
+          </div>
+
+          {/* Textos finales alrededor de los 4 cuadrantes */}
+          {/* Arriba izquierda: Complejo */}
+          <div
+            className="absolute top-[20%] left-[10%] w-[180px] italic z-20"
+            style={{
+              opacity: finalTextsOpacity,
+              transition: "opacity 0.3s ease-out",
+            }}
+          >
+            <ul 
+              className="text-[18px] text-ldc-complejo leading-5 list-disc flex flex-col gap-4"
+            >
+              <li>Impredecible</li>
+              <li>Enfoques ágiles</li>
+              <li>Inspección y adaptación </li>           
+            </ul>
+          </div>
+
+          {/* Arriba derecha: Complicado */}
+          <div
+            className="absolute top-[20%] right-[00%] w-[180px] italic z-20"
+            style={{
+              opacity: finalTextsOpacity,
+              transition: "opacity 0.3s ease-out",
+            }}
+          >
+            <ul 
+              className="text-[18px] text-ldc-complicado leading-5 list-disc flex flex-col gap-4"
+            >
+              <li>Causa-efecto no evidentes</li>
+              <li>Varias soluciones</li>
+              <li>Necesita de profesionales especializados</li>           
+            </ul>          </div>
+
+          {/* Abajo derecha: Simple */}
+          <div
+            className="absolute bottom-[30%] right-[0%] w-[180px] italic z-20"
+            style={{
+              opacity: finalTextsOpacity,
+              transition: "opacity 0.3s ease-out",
+            }}
+          >
+            <ul 
+              className="text-[18px] text-ldc-simple leading-5 list-disc flex flex-col gap-4"
+            >
+              <li>Problemáticas univocas</li>
+              <li>Soluciones  claras</li>
+              <li>Procesos repetitivos</li>           
+            </ul>          
+          </div>
+
+          {/* Abajo izquierda: Caótico */}
+          <div
+            className="absolute bottom-[30%] left-[10%] w-[180px] italic z-20"
+            style={{
+              opacity: finalTextsOpacity,
+              transition: "opacity 0.3s ease-out",
+            }}
+          >
+            <ul 
+              className="text-[18px] text-ldc-caotico leading-5 list-disc flex flex-col gap-4"
+            >
+              <li>Situaciones de crisis</li>
+              <li>Velocidad sobre robustez</li>
+              <li>Improvisación</li>           
+            </ul>  
           </div>
         </div>
       </div>

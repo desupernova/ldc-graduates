@@ -50,11 +50,24 @@ const triviaQuestions: TriviaQuestion[] = [
   }
 ];
 
+// Función para mezclar un array usando el algoritmo Fisher-Yates
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 interface TriviaProps {
   resultsText?: string;
 }
 
 export default function Trivia({ resultsText = "En apenas unos minutos ya fortaleciste tus competencias para diagnosticar escenarios y desarrollar estrategias posibles. <br/><br/>Ahora imaginate todo lo qué vas a poder aprender en nuestro taller de graduates.<br/><br/>Te esperamos para seguir entrenando!" }: TriviaProps) {
+  // Mezclar las preguntas una sola vez al montar el componente
+  const [shuffledQuestions] = useState<TriviaQuestion[]>(() => shuffleArray(triviaQuestions));
+  
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -72,7 +85,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < triviaQuestions.length - 1) {
+    if (currentQuestionIndex < shuffledQuestions.length - 1) {
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -86,14 +99,14 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
     }
   };
 
-  const currentQuestion = triviaQuestions[currentQuestionIndex];
+  const currentQuestion = shuffledQuestions[currentQuestionIndex];
   const isCorrect = selectedDomain === currentQuestion.correctAnswer;
 
   // Avance automático después de 2.5 segundos cuando se muestra el feedback
   useEffect(() => {
     if (showFeedback) {
       const timer = setTimeout(() => {
-        if (currentQuestionIndex < triviaQuestions.length - 1) {
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
           setIsTransitioning(true);
           setTimeout(() => {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -103,7 +116,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
             setTimeout(() => {
               setIsTransitioning(false);
             }, 50);
-          }, 300);
+          }, 2500);
         } else {
           // Última pregunta completada
           setIsFinished(true);
@@ -112,7 +125,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
 
       return () => clearTimeout(timer);
     }
-  }, [showFeedback, currentQuestionIndex]);
+  }, [showFeedback, currentQuestionIndex, shuffledQuestions.length]);
 
 
   const finalScore = answers.filter(Boolean).length;
@@ -127,14 +140,14 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
         <div className={`w-2/3 text-[18px] leading-relaxed mt-4`}>
           <div className="mb-4">
             <div className="text-sm text-gray-500 mb-2">
-              Pregunta {currentQuestionIndex + 1} de {triviaQuestions.length}
+              Pregunta {currentQuestionIndex + 1} de {shuffledQuestions.length}
             </div>
             {/* Barra de progreso */}
             <div className="w-full bg-gray-200 h-2 overflow-hidden">
               <div 
                 className="bg-black h-2 rounded-full transition-all duration-300 ease-out"
                 style={{ 
-                  width: `${((currentQuestionIndex + 1) / triviaQuestions.length) * 100}%` 
+                  width: `${((currentQuestionIndex + 1) / shuffledQuestions.length) * 100}%` 
                 }}
               />
             </div>
@@ -172,7 +185,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
       {isFinished && (
         <TriviaResults
           finalScore={finalScore}
-          totalQuestions={triviaQuestions.length}
+          totalQuestions={shuffledQuestions.length}
           resultsText={resultsText}
         />
       )}

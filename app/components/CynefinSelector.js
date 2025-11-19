@@ -33,7 +33,7 @@ const CynefinSelector = ({handleClick, disabled = false, highlightDomain, select
             if (domain === 'complejo') return 'fill-ldc-complejo opacity-20';
             if (domain === 'caotico') return 'fill-ldc-caotico opacity-20';
         }
-        return 'fill-white';
+        return 'fill-transparent';
     };
 
     const getStrokeClass = (domain) => {
