@@ -1,37 +1,6 @@
 @import "tailwindcss";
 
-/* Fuentes Georgia personalizadas */
-@font-face {
-  font-family: 'Georgia';
-  src: url('/georgia-2/georgia.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Georgia';
-  src: url('/georgia-2/georgiab.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Georgia';
-  src: url('/georgia-2/georgiai.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Georgia';
-  src: url('/georgia-2/georgiaz.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
+/* Fuentes Georgia personalizadas - Las rutas se inyectan dinámicamente en layout.tsx */
 
 :root {
   --background: #F8F8F8;
