@@ -3,6 +3,16 @@
 import { useRef, useEffect } from "react";
 import Image from "next/image";
 
+// Obtener el basePath para construir rutas correctas
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const getAssetPath = (path: string) => {
+  // Si la ruta ya empieza con /, no agregar basePath duplicado
+  if (path.startsWith('/')) {
+    return basePath ? `${basePath}${path}` : path;
+  }
+  return basePath ? `${basePath}/${path}` : `/${path}`;
+};
+
 interface TriviaResultsProps {
   finalScore: number;
   totalQuestions: number;
@@ -32,7 +42,7 @@ export default function TriviaResults({
   return (
     <div className="relative">
       <Image
-        src={"/puntuacion-left.png"}
+        src={getAssetPath("/puntuacion-left.png")}
         alt="Ilustración"
         height={300}
         width={250}
@@ -64,7 +74,7 @@ export default function TriviaResults({
         </div>
         <div className="w-1/3">
           <Image
-            src={"/puntuacion.png"}
+            src={getAssetPath("/puntuacion.png")}
             alt="Ilustración"
             height={500}
             width={500}

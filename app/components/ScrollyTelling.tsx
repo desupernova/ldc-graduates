@@ -3,6 +3,16 @@
 import { useState, useEffect, useRef } from "react";
 import ScrollyCirculo from "./ScrollyCirculo";
 
+// Obtener el basePath para construir rutas correctas
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const getAssetPath = (path: string) => {
+  // Si la ruta ya empieza con /, no agregar basePath duplicado
+  if (path.startsWith('/')) {
+    return basePath ? `${basePath}${path}` : path;
+  }
+  return basePath ? `${basePath}/${path}` : `/${path}`;
+};
+
 interface TextContent {
   left: string;
   right: string;
@@ -207,7 +217,7 @@ export default function ScrollyTelling() {
           }}
         >
           <img 
-            src="/scrolly-top.png" 
+            src={getAssetPath("/scrolly-top.png")} 
             alt="" 
             className="w-full h-auto"
           />
@@ -222,7 +232,7 @@ export default function ScrollyTelling() {
           }}
         >
           <img 
-            src="/scrolly-bot.png" 
+            src={getAssetPath("/scrolly-bot.png")} 
             alt="" 
             className="w-2/3 h-auto"
           />

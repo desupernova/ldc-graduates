@@ -12,6 +12,16 @@ export default function StartScreen() {
   const [playCount, setPlayCount] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isInTrivia, setIsInTrivia] = useState(false);
+  
+  // Obtener el basePath para construir rutas correctas
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const getAssetPath = (path: string) => {
+    // Si la ruta ya empieza con /, no agregar basePath duplicado
+    if (path.startsWith('/')) {
+      return basePath ? `${basePath}${path}` : path;
+    }
+    return basePath ? `${basePath}/${path}` : `/${path}`;
+  };
 
   // Detectar cuando el usuario está en la trivia y detectar scroll hacia arriba
   useEffect(() => {
@@ -109,7 +119,7 @@ export default function StartScreen() {
         {/* Imagen de fondo */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/hero-bg.png"
+            src={getAssetPath("/hero-bg.png")}
             alt="Background"
             fill
             className="object-cover"
@@ -191,8 +201,8 @@ export default function StartScreen() {
                 muted 
                 playsInline
               >
-                <source src="/instrucciones.webm" type="video/webm" />
-                <source src="/instrucciones.mp4" type="video/mp4" /> 
+                <source src={getAssetPath("/instrucciones.webm")} type="video/webm" />
+                <source src={getAssetPath("/instrucciones.mp4")} type="video/mp4" /> 
               </video>
             </div>
           </div>
