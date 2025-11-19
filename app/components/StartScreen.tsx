@@ -2,20 +2,13 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import CynefinSVG from "./CynefinSVG";
 import ScrollyBGTop from "./ScrollyBGTop";
-import ScrollyBGBottom from "./ScrollyBGBottom";
 import ScrollyCirculo from "./ScrollyCirculo";
 import ScrollyTelling from "./ScrollyTelling";
 import Trivia from "./Trivia";
 
-interface StartScreenProps {
-  onStart: () => void;
-}
-
-export default function StartScreen({ onStart }: StartScreenProps) {
+export default function StartScreen() {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const scrollyRef = useRef<HTMLDivElement>(null);
-  const bottomSectionRef = useRef<HTMLDivElement>(null);
-  const [isBottomSticky, setIsBottomSticky] = useState(false);
 
 
   useEffect(() => {
@@ -39,30 +32,10 @@ export default function StartScreen({ onStart }: StartScreenProps) {
       }
     };
 
-    const handleScroll = () => {
-      if (!scrollyRef.current || !bottomSectionRef.current) return;
-
-      const scrollyRect = scrollyRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // El scrolly está activo cuando está visible en el viewport
-      const isScrollyActive = scrollyRect.bottom > 0;
-
-      console.log(scrollyRect.top)
-      console.log(windowHeight)
-      console.log(scrollyRect.bottom)
-
-      // Se vuelve sticky cuando el scrolly está activo
-      setIsBottomSticky(isScrollyActive);
-    };
-
     handleParallax();
-    handleScroll();
     window.addEventListener("scroll", handleParallax, { passive: true });
-    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleParallax);
-      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

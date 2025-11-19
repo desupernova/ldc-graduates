@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import CynefinSelector from "./CynefinSelector";
-import image from "next/image";
-import Image from "next/image";
+import TriviaResults from "./TriviaResults";
 
 interface TriviaQuestion {
   id: number;
@@ -62,7 +61,6 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [answers, setAnswers] = useState<boolean[]>([]);
-  const scoreTitleRef = useRef<HTMLHeadingElement>(null);
 
   const handleAnswer = (domain: string) => {
     if (!showFeedback) {
@@ -116,18 +114,6 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
     }
   }, [showFeedback, currentQuestionIndex]);
 
-  // Scroll automático al título de puntuación cuando termine la trivia
-  useEffect(() => {
-    if (isFinished && scoreTitleRef.current) {
-      // Pequeño delay para asegurar que el DOM se haya actualizado
-      setTimeout(() => {
-        scoreTitleRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }, 100);
-    }
-  }, [isFinished]);
 
   const finalScore = answers.filter(Boolean).length;
 
@@ -184,46 +170,11 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
 
       {/* Sección de resultados debajo del cuadrito */}
       {isFinished && (
-        <div className="relative">
-                    <Image
-              src={"/puntuacion-left.png"}
-              alt="Ilustración"
-              height={300}
-              width={250}
-              className="object-cover absolute top-0 left-0"
-            />
-
-        <div className="max-w-[900px] mx-auto mt-48 relative flex justify-between">
-        <div className="w-2/3">
-          <h2 ref={scoreTitleRef} className="text-[88px] leading-[88px] mb-8">
-            Tu puntuación fue de{' '}
-            <span className="text-ldc-simple">{finalScore}/{triviaQuestions.length}</span>!
-          </h2>
-          <p className="text-[18px] leading-relaxed mb-12 italic max-w-[500px]">
-            <span dangerouslySetInnerHTML={{ __html: resultsText }} />
-          </p>
-          <a
-            href="https://dew1-share.percipio.com/cd/iP5G-fvHd"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-ldc-simple hover:opacity-90 text-white 
-            w-full max-w-[300px] text-center
-            px-6 py-2 rounded-xs transition-opacity duration-200 font-medium"
-          >
-            Agendar el evento
-          </a>
-        </div>
-        <div className="w-1/3">
-        <Image
-              src={"/puntuacion.png"}
-              alt="Ilustración"
-              height={500}
-              width={500}
-              className="object-contain transform translate-x-[-25%]"
-            />
-        </div>
-          </div>
-          </div>
+        <TriviaResults
+          finalScore={finalScore}
+          totalQuestions={triviaQuestions.length}
+          resultsText={resultsText}
+        />
       )}
     </div>
   );
