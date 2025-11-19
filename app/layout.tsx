@@ -11,6 +11,9 @@ function getBaseUrl() {
 
 const baseUrl = getBaseUrl();
 
+// Construir URL absoluta de la imagen OG
+const ogImageUrl = `${baseUrl}/og-image.png`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "La gestión no es sencilla | LDC Graduates",
@@ -25,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "LDC Graduates",
     images: [
       {
-        url: "/hero-bg.png",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: "LDC Graduates - La gestión no es sencilla",
@@ -37,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "La gestión no es sencilla | LDC Graduates",
     description: "Te invitamos a fortalecer tu capacidad para planificar, estimar y gestionar de manera efectiva. Adquirí técnicas y herramientas para impulsar proyectos en diferentes tipos de contextos.",
-    images: ["/hero-bg.png"],
+    images: [ogImageUrl],
   },
   alternates: {
     canonical: baseUrl,
