@@ -123,7 +123,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
           // Última pregunta completada
           setIsFinished(true);
         }
-      }, 5000); // Esperar 2.5 segundos mostrando el feedback
+      }, 5500); // Esperar 2.5 segundos mostrando el feedback
 
       return () => clearTimeout(timer);
     }

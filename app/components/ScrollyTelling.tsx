@@ -21,18 +21,31 @@ interface TextContent {
 const sections: TextContent[] = [
   {
     left: "",
-    right: "En este dominio se opera con problemáticas univocas: la relación entre causa y efecto es lineal, y las soluciones son claras. <br/><br/>Los procesos mas eficientes en este dominio son aquellos qué especifican una serie de pasos realizados de manera repetitiva. <br/><br/>En este entorno, un protocolo de “mejores practicas”,  esto es, utilizar soluciones conocidas y probadas,  resulta  la mejor estrategia. <br/><br/>Ejemplo: la construccion en serie de un producto, o la instalacion de un mismo sistema para diferentes clientes."
+    right: "En&nbsp;el <b>dominio&nbsp;simple</b> se&nbsp;opera con problemáticas univocas: " + 
+    "la&nbsp;relación entre causa&nbsp;y&nbsp;efecto es&nbsp;lineal, y&nbsp;las soluciones son&nbsp;claras. " + 
+    "<br/><br/>Los procesos mas&nbsp;eficientes en&nbsp;este dominio son&nbsp;aquellos qué especifican" + 
+    " una&nbsp;serie de&nbsp;pasos realizados de&nbsp;manera repetitiva. " + 
+    "Un&nbsp;protocolo de&nbsp;<b>&ldquo;mejores&nbsp;practicas&rdquo;</b>, resulta la&nbsp;mejor&nbsp;estrategia.<br/><br/>" +
+    "<b>Ejemplo:</b> la&nbsp;construccion en&nbsp;serie de&nbsp;un&nbsp;producto."
+
   },
   {
     left: "",
-    right: "Aquí tenemos relaciones de causa-efecto que ya no son evidentes. <br/><br/>Hay diversas soluciones correctas para una misma problemática: solo personas expertas pueden identificarlas y optar por la más indicada. <br/><br/>Por este motivo en estos entornos recurrir al conocimiento técnico de profesionales especializados es la mejor opción. <br/><br/>Ejemplos: optimizacion logistica en el envio de paquetes, sincronización de un proceso de produccion con el de ventas. "
+    right: "En&nbsp;el <b>dominio&nbsp;complicado</b> las&nbsp;relaciones de&nbsp;causa-efecto pero ya&nbsp;no son&nbsp;evidentes. " + 
+    "<br/><br/>Hay diversas soluciones correctas para una&nbsp;misma problemática: solo <b>personas&nbsp;expertas</b>" + 
+    " pueden identificarlas y&nbsp;optar por&nbsp;la&nbsp;más indicada. " + 
+    "<br/><br/><b>Ejemplo:</b> un&nbsp;proyecto de&nbsp;optimizacion logistica en&nbsp;el&nbsp;envio&nbsp;de&nbsp;paquetes."
   },
   {
-    left: "Al movernos en entornos complejos, los resultados son impredecibles: las variables son demasiadas y/o difíciles de aislar, y no existe casuística anterior. <br/><br/>Este es el lugar donde priman los enfoques llamados ágiles o emergentes: dado qué no existen buenas prácticas, la mejor estrategia es inspeccionar y adaptar, realizando pequeños experimentos donde fallar no represente un gran impacto. <br/><br/>El desarrollo de nuevos productos o servicios en mercados desconocidos, es un tipico caso de dominio complejo.<br/><br/>Ejemplo: el desarrollo de nuevos productos o servicios en mercados desconocidos, es un tipico caso de dominio complejo.",
+    left: "En&nbsp;el <b>dominio&nbsp;complejo</b> los&nbsp;resultados son&nbsp;impredecibles: las&nbsp;variables son&nbsp;demasiadas y/o difíciles de&nbsp;aislar, y&nbsp;no existe casuística anterior. " + 
+    "<br/><br/>Este es&nbsp;el&nbsp;lugar donde priman los&nbsp;enfoques llamados <b>ágiles</b>: la&nbsp;mejor estrategia es&nbsp;realizar pequeños experimentos y&nbsp;ajustar en&nbsp;base a&nbsp;los&nbsp;resultados. " + 
+    "<br/><br/><b>Ejemplo:</b> el&nbsp;desarrollo de&nbsp;nuevos&nbsp;productos o&nbsp;servicios en&nbsp;mercados desconocidos.",
     right: ""
   },
   {
-    left: "El dominio caótico es el propio de las situaciones de crisis, donde se requieren respuestas inmediatas: privilegiaremos la velocidad de las soluciones por encima de la robustez de las mismas. No hay espacio para análisis exhaustivos: este es el dominio de personas qué tomen el mando y sepan improvisar. Por ejemplo, una interrupción inesperada (ej  colapso de transporte) impide sacar la producción.",
+    left: "El <b>dominio&nbsp;caótico</b> es&nbsp;el&nbsp;propio de&nbsp;las&nbsp;situaciones de&nbsp;crisis, donde se&nbsp;requieren <b>respuestas&nbsp;inmediatas</b>: privilegiaremos la&nbsp;velocidad de&nbsp;las&nbsp;soluciones por&nbsp;encima de&nbsp;la&nbsp;robustez de&nbsp;las&nbsp;mismas. " + 
+    "<br/><br/>No&nbsp;hay espacio para análisis exhaustivos: este es&nbsp;el&nbsp;dominio de&nbsp;personas qué tomen el&nbsp;mando y&nbsp;sepan improvisar. " + 
+    "<br/><br/><b>Ejemplo:</b> una&nbsp;interrupción inesperada (un&nbsp;colapso de&nbsp;transporte) impide sacar la&nbsp;producción.",
     right: ""
   }
 ];
@@ -63,11 +76,11 @@ export default function ScrollyTelling() {
       const container = containerRef.current;
       const rect = container.getBoundingClientRect();
       const containerTop = rect.top;
-      const totalHeight = windowHeight * 8; // 800vh total: 100vh blanco + 100vh desorden + 400vh contenido + 100vh final anterior + 100vh nuevo paso final
+      const totalHeight = windowHeight * 7.2; // 720vh total: 90vh blanco + 90vh desorden + 360vh contenido + 90vh final anterior + 90vh nuevo paso final (10% más pequeño)
       
-      // Paso 1 (0-100vh): Blanco - solo círculo
+      // Paso 1 (0-90vh): Blanco - solo círculo
       const scrollProgress = (windowHeight - containerTop) / totalHeight;
-      const isInFirstStep = scrollProgress < (1/8); // 100vh / 800vh = 0.125
+      const isInFirstStep = scrollProgress < (1/8); // 90vh / 720vh = 0.125
       setIsFirstStep(isInFirstStep);
       
       // Controlar opacidad de las imágenes: bajan cuando entrás al primer paso, suben cuando salís del último
@@ -84,8 +97,8 @@ export default function ScrollyTelling() {
         setImagesOpacity(0.3);
       }
       
-      // Paso 2 (100-200vh): Desorden - aparece y desaparece
-      const isInDesordenStep = scrollProgress >= (1/8) && scrollProgress < (2/8); // 100-200vh
+      // Paso 2 (90-180vh): Desorden - aparece y desaparece
+      const isInDesordenStep = scrollProgress >= (1/8) && scrollProgress < (2/8); // 90-180vh
       if (isInDesordenStep) {
         const desordenStepProgress = (scrollProgress - (1/8)) / (1/8); // Normalizar a 0-1 dentro del paso desorden
         // Hacer que aparezca y desaparezca: aparece al inicio, desaparece al final
@@ -119,10 +132,10 @@ export default function ScrollyTelling() {
         setDesordenTextOpacity(0);
       }
       
-      // Detectar si estamos en el último step (después de Caótico, últimos 100vh)
-      // Caótico va de 500-650vh (150vh), entonces el paso final anterior empieza en 650vh
-      // El nuevo paso final empieza en 700vh (7/8)
-      const isInFinalStep = scrollProgress >= (7/8); // 700vh / 800vh = 0.875
+      // Detectar si estamos en el último step (después de Caótico, últimos 90vh)
+      // Caótico va de 450-585vh (135vh), entonces el paso final anterior empieza en 585vh
+      // El nuevo paso final empieza en 630vh (7/8)
+      const isInFinalStep = scrollProgress >= (7/8); // 630vh / 720vh = 0.875
       setIsFinalStep(isInFinalStep);
       
       // Rastrear si alguna vez llegamos al paso final
@@ -132,14 +145,14 @@ export default function ScrollyTelling() {
 
       // Calcular opacidad del último step anterior (todos los títulos visibles)
       if (scrollProgress > (6.5/8) && scrollProgress < (7/8)) {
-        const finalStepProgress = (scrollProgress - (6.5/8)) / (0.5/8); // Normalizar a 0-1 dentro de los primeros 50vh del paso final anterior
-        setFinalStepOpacity(Math.min(1, finalStepProgress * 2)); // Fade in rápido en los primeros 50vh
+        const finalStepProgress = (scrollProgress - (6.5/8)) / (0.5/8); // Normalizar a 0-1 dentro de los primeros 45vh del paso final anterior
+        setFinalStepOpacity(Math.min(1, finalStepProgress * 2)); // Fade in rápido en los primeros 45vh
       } else {
         setFinalStepOpacity(0);
       }
       
       // Detectar si el contenedor ya pasó completamente
-      const containerBottom = containerTop + (windowHeight * 8);
+      const containerBottom = containerTop + (windowHeight * 7.2);
       const hasPassed = containerBottom < 0;
       setIsContainerPassed(hasPassed);
       
@@ -202,7 +215,7 @@ export default function ScrollyTelling() {
     <div 
       ref={containerRef}
       className="relative"
-      style={{ height: "800vh" }} // 100vh blanco + 100vh desorden + 400vh contenido + 100vh final anterior + 100vh nuevo paso final
+      style={{ height: "720vh" }} // 90vh blanco + 90vh desorden + 360vh contenido + 90vh final anterior + 90vh nuevo paso final (10% más pequeño)
     >
       {/* Contenedor fijo para el círculo y títulos */}
       <div 
@@ -239,7 +252,7 @@ export default function ScrollyTelling() {
         </div>
 
         <div 
-          className="relative w-full max-w-[1200px] mx-auto px-8 z-8"
+          className="relative w-full max-w-[1080px] mx-auto px-8 z-8"
           style={{
             transition: "opacity 0.3s ease-out",
             opacity: isContainerPassed && hasReachedFinalStep ? 0 : 1,
@@ -263,7 +276,7 @@ export default function ScrollyTelling() {
             }}
           >
             <h2 
-              className="text-[88px] font-serif text-center text-ldc-desorden"
+              className="text-[61px] font-serif text-center text-ldc-desorden"
             >
               Desorden
             </h2>
@@ -272,14 +285,14 @@ export default function ScrollyTelling() {
           {/* Títulos alrededor del círculo */}
           {/* Arriba izquierda: Complejo (sección 2) */}
           <div
-            className="absolute top-0 left-[50%] -translate-x-1/1 pr-12 italic"
+            className="absolute top-[7%] left-[50%] -translate-x-1/1 pr-12 italic"
             style={{
               opacity: (opacities[2] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[88px] font-serif text-ldc-complejo"
+              className="text-[61px] font-serif text-ldc-complejo"
             >
               Complejo
             </h2>
@@ -287,14 +300,14 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado (sección 1) */}
           <div
-            className="absolute top-0 left-[50%] pl-12 italic"
+            className="absolute top-[7%] left-[50%] pl-12 italic"
             style={{
               opacity: (opacities[1] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[88px] font-serif text-right text-ldc-complicado"
+              className="text-[61px] font-serif text-right text-ldc-complicado"
             >
               Complicado
             </h2>
@@ -302,14 +315,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo derecha: Simple (sección 0) */}
           <div
-            className="absolute bottom-0 left-[50%] pl-12 italic"
+            className="absolute bottom-[12%] left-[50%] pl-12 italic"
             style={{
               opacity: (opacities[0] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[88px] font-serif text-right text-ldc-simple"
+              className="text-[61px] font-serif text-right text-ldc-simple"
             >
               Simple
             </h2>
@@ -317,14 +330,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo izquierda: Caótico (sección 3) */}
           <div
-            className="absolute bottom-0 left-[50%] -translate-x-1/1 pr-12 italic"
+            className="absolute bottom-[12%] left-[50%] -translate-x-1/1 pr-12 italic"
             style={{
               opacity: (opacities[3] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[88px] font-serif text-ldc-caotico"
+              className="text-[61px] font-serif text-ldc-caotico"
             >
               Caótico
             </h2>
@@ -333,14 +346,14 @@ export default function ScrollyTelling() {
           {/* Textos finales alrededor de los 4 cuadrantes */}
           {/* Arriba izquierda: Complejo */}
           <div
-            className="absolute top-[20%] left-[10%] w-[180px] italic z-20"
+            className="absolute top-[20%] left-[10%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[18px] text-ldc-complejo leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-complejo leading-5 list-disc flex flex-col gap-4"
             >
               <li>Impredecible</li>
               <li>Enfoques ágiles</li>
@@ -350,14 +363,14 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado */}
           <div
-            className="absolute top-[20%] right-[00%] w-[180px] italic z-20"
+            className="absolute top-[20%] right-[00%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[18px] text-ldc-complicado leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-complicado leading-5 list-disc flex flex-col gap-4"
             >
               <li>Causa-efecto no evidentes</li>
               <li>Varias soluciones</li>
@@ -366,14 +379,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo derecha: Simple */}
           <div
-            className="absolute bottom-[30%] right-[0%] w-[180px] italic z-20"
+            className="absolute bottom-[30%] right-[0%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[18px] text-ldc-simple leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-simple leading-5 list-disc flex flex-col gap-4"
             >
               <li>Problemáticas univocas</li>
               <li>Soluciones  claras</li>
@@ -383,14 +396,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo izquierda: Caótico */}
           <div
-            className="absolute bottom-[30%] left-[10%] w-[180px] italic z-20"
+            className="absolute bottom-[30%] left-[10%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[18px] text-ldc-caotico leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-caotico leading-5 list-disc flex flex-col gap-4"
             >
               <li>Situaciones de crisis</li>
               <li>Velocidad sobre robustez</li>
@@ -401,19 +414,19 @@ export default function ScrollyTelling() {
       </div>
 
       {/* Textos que scrollean con el contenido */}
-      {/* Orden: Simple (0) en 200vh, Complicado (1) en 300vh, Complejo (2) en 400vh, Caótico (3) en 500vh */}
+      {/* Orden: Simple (0) en 180vh, Complicado (1) en 270vh, Complejo (2) en 360vh, Caótico (3) en 450vh */}
       {sections.map((section, index) => {
         const opacity = isFinalStep ? 0 : (opacities[index] || 0);
         
-        // Mapear índices a posiciones: 0->200vh, 1->300vh, 2->400vh, 3->500vh
+        // Mapear índices a posiciones: 0->180vh, 1->270vh, 2->360vh, 3->450vh (10% más pequeño)
         const positionMap: { [key: number]: number } = {
-          0: 200, // Simple
-          1: 300, // Complicado
-          2: 400, // Complejo
-          3: 500  // Caótico (tendrá 150vh de altura)
+          0: 180, // Simple
+          1: 270, // Complicado
+          2: 360, // Complejo
+          3: 450  // Caótico (tendrá 135vh de altura)
         };
-        const sectionTop = positionMap[index] || 200;
-        const sectionHeight = index === 3 ? 150 : 100; // Caótico tiene más altura
+        const sectionTop = positionMap[index] || 180;
+        const sectionHeight = index === 3 ? 135 : 90; // Caótico tiene más altura (10% más pequeño)
         
         return (
           <div
@@ -432,25 +445,34 @@ export default function ScrollyTelling() {
             <div className="relative w-full mx-auto px-8 flex items-center justify-between">
               {/* Texto izquierdo */}
               <div
-                className="w-1/5 italic"
+                className="w-1/4 italic"
                 style={{ 
                   transform: `translateX(${opacity < 0.1 ? -20 : 0}px)`,
                   transition: "transform 0.3s ease-out",
                 }}
               >
-                <p className="text-[18px] leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: section.left }}/>
+                <p 
+                  className="text-[16px] text-left" 
+                  style={{
+                    textWrap: 'balance',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: section.left }}
+                />
               </div>
 
               {/* Texto derecho */}
               <div
-                className="w-1/5 italic"
+                className="w-1/4 italic"
                 style={{ 
                   transform: `translateX(${opacity < 0.1 ? 20 : 0}px)`,
                   transition: "transform 0.3s ease-out",
                 }}
               >
                 <p 
-                  className="text-[18px] leading-relaxed text-right" 
+                  className="text-[16px] text-right" 
+                  style={{
+                    textWrap: 'balance',
+                  }}
                   dangerouslySetInnerHTML={{ __html: section.right }}
                 />
               </div>
@@ -459,15 +481,15 @@ export default function ScrollyTelling() {
         );
       })}
 
-      {/* Sección de texto de Desorden (100-200vh) */}
+      {/* Sección de texto de Desorden (90-180vh) */}
       <div
         ref={(el) => {
           desordenTextRef.current = el;
         }}
         className="absolute left-0 right-0 flex items-center justify-center"
         style={{
-          top: "100vh",
-          height: "100vh",
+          top: "90vh",
+          height: "90vh",
           opacity: isFinalStep ? 0 : desordenTextOpacity,
           transition: "opacity 0.3s ease-out",
         }}
@@ -482,8 +504,8 @@ export default function ScrollyTelling() {
             }}
           >
             <p 
-              className="text-[18px] leading-relaxed w-[450px] mx-auto" 
-              dangerouslySetInnerHTML={{ __html: "Esta es la zona más peligrosa: no entendemos en qué dominio estamos, y nos exponemos a actuar de manera diferente a la qué se necesita para resolver ciertos problemas. <br/><br/>En estos casos, todos nuestros esfuerzos deben estar centrados en salir de este espacio a uno mejor identificado, para posteriormente adoptar el enfoque correspondiente. " }}
+              className="text-[16px] leading-relaxed w-[500px] mx-auto" 
+              dangerouslySetInnerHTML={{ __html: "Esta es la zona más peligrosa: no entendemos en qué dominio estamos, y nos exponemos a actuar de manera diferente a la qué se necesita para resolver ciertos problemas. <br/><br/>En estos casos, todos nuestros esfuerzos deben estar centrados en <b>salir de este espacio</b> a uno mejor identificado, para posteriormente adoptar el enfoque correspondiente. " }}
             />
           </div>
         </div>

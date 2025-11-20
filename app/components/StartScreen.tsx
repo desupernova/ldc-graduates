@@ -157,12 +157,10 @@ export default function StartScreen() {
             {/* Texto explicativo - 2/3 del ancho */}
             <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
-              Te invitamos a fortalecer tu capacidad para planificar, estimar y gestionar de manera efectiva.  En esta sesion, vas a adquirir técnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes. 
+              Te invitamos a un espacio donde podrás fortalecer tu capacidad para planificar, estimar y gestionar de manera efectiva. En este taller  vas a adquirir tecnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes.  
               <br/>
               <br/>
-              A la hora de gestionar podemos encontrarnos en distintos tipos de entornos: inclusive dentro de LDC, existen distintos proyectos qué exigen enfoques diferenciados de acuerdo al contexto. 
-              <br/><br/>
-              El marco Cynefin,  desarrollado por Dave Snowden,  nos propone una visualización sencilla y esquemática para empezar a pensar nuestra estrategia:
+              Ahora, ¿cómo se supone qué adoptemos nuestro estilo de gestion de acuerdo a cada entorno? Podemos darte algunas pistas para ir entrenando tu capacidad.  El <b>marco Cynefin</b>,  desarrollado por Dave Snowden,  nos propone una visualización sencilla y esquemática
               </p>
             </div>
 
@@ -178,6 +176,9 @@ export default function StartScreen() {
             <i>Cynefin.</i>
           </h1>
 
+          <p className="text-[18px] leading-relaxed my-auto italic max-w-[800px] text-center mx-auto">A la hora de gestionar, podemos encontrarnos en distintos tipos de dominios: inclusive dentro de LDC, existen proyectos qué exigen enfoques diferenciados de acuerdo al contexto. 
+          </p>
+
           {/* Contenedor de scrollytelling con 4 secciones */}
           <div ref={scrollyRef}>
             <ScrollyTelling />
@@ -186,12 +187,12 @@ export default function StartScreen() {
           {/* Fondo sticky que scrollea con el contenido y luego se queda fijo en la parte inferior */}
           
 
-          <div className="flex gap-8 max-w-[1100px] mx-auto mb-40 mt-[50vh]">
+          <div className="flex gap-8 max-w-[1100px] mx-auto mb-32 mt-[50vh]">
             {/* Texto explicativo - 2/3 del ancho */}
             <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
-                Ahora bien: en la vida real, no siempre resulta tan simple determinar en qué dominio nos encontramos. <br /><br />
-                Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
+                Ahora bien: en la vida real, <b>no siempre resulta tan simple determinar en qué dominio nos encontramos</b>. Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
+                A continuacion, <b>te presentaremos seis proyectos distintos</b>. Tenes qué diagnosticar en qué dominio te encontras en cada uno de los casos. 
               </p>
             </div>
             <div className="w-1/3 flex-shrink-0 p-10">

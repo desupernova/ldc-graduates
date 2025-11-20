@@ -38,8 +38,11 @@ export default function Navbar() {
     >
       <div className="h-full max-w-[1100px] mx-auto px-4 flex items-center justify-between">
         <p className="text-lg">
-          Agendá <span className="text-ldc-simple">nuestra capacitación</span> el 12/02
+          Agendá <span className="text-ldc-simple">la fecha del taller</span>
         </p>
+
+        <p className="text-xl text-ldc-complejo mr-6">LDC<span className="text-ldc-simple">.</span></p>
+
         <a
           href="https://dew1-share.percipio.com/cd/iP5G-fvHd"
           target="_blank"
