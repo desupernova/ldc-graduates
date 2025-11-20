@@ -10,19 +10,13 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Si estamos en la parte superior, siempre mostrar
-      if (currentScrollY < 10) {
-        setIsVisible(true);
-      } else {
         // Si scrolleamos hacia abajo, ocultar
         // Si scrolleamos hacia arriba, mostrar
-        if (currentScrollY > lastScrollY) {
+        if (currentScrollY < lastScrollY) {
           setIsVisible(false);
         } else {
           setIsVisible(true);
         }
-      }
-
       setLastScrollY(currentScrollY);
     };
 
@@ -32,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 h-[75px] bg-white shadow-md transition-transform duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 h-[56px] bg-white shadow-md transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

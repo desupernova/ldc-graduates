@@ -69,6 +69,15 @@ body {
   }
 }
 
+@keyframes progressCircle {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 43.98;
+  }
+}
+
 @keyframes slideInFromRight {
   from {
     opacity: 0;

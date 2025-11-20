@@ -62,8 +62,9 @@ const CynefinSelector = ({handleClick, disabled = false, highlightDomain, select
     const getHoverClassText = (domain) => {
         // Si hay respuesta revelada, no cambiar colores de texto
         if (highlightDomain) {
-            if (highlightDomain === domain) return 'text-black';
-            else return 'text-gray-400';
+            if (highlightDomain === domain) return 'text-ldc-' + domain
+            else if (selectedDomain === domain) return 'opacity-50 text-ldc-' + domain;
+            else return 'text-white';
         }
         // Si hay hover activo
         if (hoverDomain) {
@@ -72,18 +73,18 @@ const CynefinSelector = ({handleClick, disabled = false, highlightDomain, select
                 return 'text-ldc-' + domain;
             }
             // Los otros dominios: gris
-            return 'text-gray-400';
+            return 'text-white';
         }
         // Por defecto: negro
-        return 'text-black';
+        return 'text-white';
     };
 
     return (
         <div className="relative w-fit">
-        <p className={`absolute top-6 left-4 rotate-[-45deg] transition-colors duration-300 italic ${getHoverClassText('complejo')}`}>complejo</p>
-        <p className={`absolute top-6 right-2 rotate-45 transition-colors duration-300 italic ${getHoverClassText('complicado')}`}>complicado</p>
-        <p className={`absolute bottom-6 left-4 rotate-45 transition-colors duration-300 italic ${getHoverClassText('caotico')}`}>caótico</p>
-        <p className={`absolute bottom-6 right-4 rotate-[-45deg] transition-colors duration-300 italic ${getHoverClassText('simple')}`}>simple</p>
+        <p className={`absolute top-9 left-5 rotate-[-45deg] transition-colors duration-300 italic ${getHoverClassText('complejo')}`}>complejo</p>
+        <p className={`absolute top-9 right-3.5 rotate-45 transition-colors duration-300 italic ${getHoverClassText('complicado')}`}>complicado</p>
+        <p className={`absolute bottom-9 left-7 rotate-45 transition-colors duration-300 italic ${getHoverClassText('caotico')}`}>caótico</p>
+        <p className={`absolute bottom-9 right-8 rotate-[-45deg] transition-colors duration-300 italic ${getHoverClassText('simple')}`}>simple</p>
             <svg width="305" height="306" viewBox="0 0 305 306" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path 
             onClick={() => handlePathClick('complejo')} 

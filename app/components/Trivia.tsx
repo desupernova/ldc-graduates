@@ -64,7 +64,7 @@ interface TriviaProps {
   resultsText?: string;
 }
 
-export default function Trivia({ resultsText = "En apenas unos minutos ya fortaleciste tus competencias para diagnosticar escenarios y desarrollar estrategias posibles. <br/><br/>Ahora imaginate todo lo qué vas a poder aprender en nuestro taller de graduates.<br/><br/>Te esperamos para seguir entrenando!" }: TriviaProps) {
+export default function Trivia({ resultsText = "En apenas unos minutos ya fortaleciste tus competencias para diagnosticar escenarios y desarrollar estrategias posibles. <br/><br/>Ahora imaginate todo lo qué vas a poder aprender en nuestro taller de graduates.<br/><br/><b>Te esperamos para seguir entrenando!</b>" }: TriviaProps) {
   // Mezclar las preguntas una sola vez al montar el componente
   const [shuffledQuestions] = useState<TriviaQuestion[]>(() => shuffleArray(triviaQuestions));
   
@@ -132,11 +132,22 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
 
   const finalScore = answers.filter(Boolean).length;
 
+  // Función helper para obtener el color del dominio
+  const getDomainColor = (domain: string) => {
+    const colors: { [key: string]: string } = {
+      simple: '#4D9D44',
+      complicado: '#009EDC',
+      complejo: '#004F6E',
+      caotico: '#000000'
+    };
+    return colors[domain] || '#000000';
+  };
+
   return (
-    <div className="relative overflow-hidden mb-24" style={{ minHeight: '400px' }}>
+    <div className="relative mb-24" style={{ minHeight: '400px' }}>
       <div 
         key={currentQuestionIndex}
-        className={`bg-white rounded-[24px] p-8 flex gap-16 relative z-10 will-change-transform max-w-[1200px] mx-auto ${isFinished ? 'mb-12' : ''}`}
+        className={`bg-white rounded-[24px] p-8 pl-20 pt-20 pb-16 flex gap-16 relative z-10 will-change-transform max-w-[1200px] mx-auto overflow-hidden ${isFinished ? 'mb-12' : ''}`}
       >
         {/* Texto de la pregunta - 2/3 del ancho */}
         <div className={`w-2/3 text-[18px] leading-relaxed mt-4`}>
@@ -168,6 +179,36 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
               <p className={`italic text-md ${'text-ldc-' + currentQuestion.correctAnswer}`}>
                 {isCorrect ? "¡Correcto! " : "Incorrecto. "} {currentQuestion.feedback}
               </p>
+              {/* Indicador circular de progreso - solo si no es la última pregunta */}
+              {currentQuestionIndex < shuffledQuestions.length - 1 && (
+                <div className="mt-2">
+                  <svg width="16" height="16" className="transform -rotate-90" style={{ color: getDomainColor(currentQuestion.correctAnswer) }}>
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="7"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      style={{ opacity: 0.3 }}
+                    />
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="7"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeDasharray="43.98"
+                      strokeDashoffset="0"
+                      style={{
+                        animation: 'progressCircle 5.5s linear forwards',
+                      }}
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           )}
         </div>

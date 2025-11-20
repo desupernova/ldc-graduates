@@ -115,7 +115,7 @@ export default function StartScreen() {
 
   return (
     <>
-      <div className="relative w-full h-screen overflow-x-hidden mt-8">
+      <div className="relative w-full h-screen overflow-x-hidden">
         {/* Imagen de fondo */}
         <div className="absolute inset-0 w-full h-full z-0">
           <Image
@@ -134,18 +134,20 @@ export default function StartScreen() {
 
       {/* Sección de contenido explicativo */}
       <div className="w-full py-16 relative z-10">
-        <div className="max-w-[1200px] mx-auto px-4">
+        <div 
+            ref={parallaxRef} 
+            className="max-w-[1200px] mx-auto px-4 relative will-change-transform"
+            style={{ zIndex: 1000 }}
+          >
           {/* Título */}
-          <h1 className="text-[88px] font-serif leading-[72px] mb-0 px-12 block">
+          <h1 className="text-[88px] font-serif leading-[72px] mb-24 px-12 block">
             La gestión <br/>
             no es sencilla
           </h1>
 
           {/* Contenedor blanco con SVG y texto */}
           <div
-            ref={parallaxRef}
-            className="bg-white rounded-[24px] p-8 flex gap-8 relative z-10 will-change-transform mb-[40vh]"
-            style={{ zIndex: 1000 }}
+            className="bg-white rounded-[24px] p-8 flex gap-4 mb-[40vh]"
           >
             {/* SVG - 1/3 del ancho */}
             <div className="w-1/3 flex-shrink-0">
@@ -155,12 +157,13 @@ export default function StartScreen() {
             </div>
 
             {/* Texto explicativo - 2/3 del ancho */}
-            <div className="w-2/3 text-[18px] leading-relaxed my-auto">
+            <div className="w-2/3 text-[18px] leading-relaxed my-auto pr-20">
               <p className="italic">
-              Te invitamos a un espacio donde podrás fortalecer tu capacidad para planificar, estimar y gestionar de manera efectiva. En este taller  vas a adquirir tecnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes.  
+              Te invitamos a un espacio donde podrás fortalecer tus habilidades para <b>planificar, estimar y gestionar</b> de manera efectiva. 
+              En este taller  vas a adquirir tecnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes.  
               <br/>
               <br/>
-              Ahora, ¿cómo se supone qué adoptemos nuestro estilo de gestion de acuerdo a cada entorno? Podemos darte algunas pistas para ir entrenando tu capacidad.  El <b>marco Cynefin</b>,  desarrollado por Dave Snowden,  nos propone una visualización sencilla y esquemática
+              Pero cuando hablamos de <b>contextos</b>… ¿a qué nos referimos exactamente? ¿Cómo se supone qué adoptemos nuestro estilo de gestion de acuerdo a cada entorno? Podemos darte algunas pistas para ir entrenando tu capacidad. <br/><br/>El <b>marco Cynefin</b>,  desarrollado por Dave Snowden,  nos propone una visualización sencilla y esquemática.
               </p>
             </div>
 
@@ -191,8 +194,8 @@ export default function StartScreen() {
             {/* Texto explicativo - 2/3 del ancho */}
             <div className="w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
-                Ahora bien: en la vida real, <b>no siempre resulta tan simple determinar en qué dominio nos encontramos</b>. Veamos algunos ejemplos, y de paso, entrenemos tu capacidad para reconocerlos a través de una pequeña trivia. <br /><br />
-                A continuacion, <b>te presentaremos seis proyectos distintos</b>. Tenes qué diagnosticar en qué dominio te encontras en cada uno de los casos. 
+                Ahora bien: en la vida real <b>no siempre es tan fácil darse cuenta en qué dominio estamos</b>. Por eso te proponemos ver algunos ejemplos y, de paso, poner a prueba tu mirada con una pequeña trivia.<br /><br />
+                A continuacion vas a encontrar <b>seis proyectos distintos</b>. Tu desafío es identificar en qué dominio se ubica cada uno. 
               </p>
             </div>
             <div className="w-1/3 flex-shrink-0 p-10">

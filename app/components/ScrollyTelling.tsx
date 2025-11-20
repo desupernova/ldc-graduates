@@ -26,7 +26,7 @@ const sections: TextContent[] = [
     "<br/><br/>Los procesos mas&nbsp;eficientes en&nbsp;este dominio son&nbsp;aquellos qué especifican" + 
     " una&nbsp;serie de&nbsp;pasos realizados de&nbsp;manera repetitiva. " + 
     "Un&nbsp;protocolo de&nbsp;<b>&ldquo;mejores&nbsp;practicas&rdquo;</b>, resulta la&nbsp;mejor&nbsp;estrategia.<br/><br/>" +
-    "<b>Ejemplo:</b> la&nbsp;construccion en&nbsp;serie de&nbsp;un&nbsp;producto."
+    "<span class='text-ldc-simple'><b>Ejemplo:</b> la&nbsp;construccion en&nbsp;serie de&nbsp;un&nbsp;producto.</span>"
 
   },
   {
@@ -34,12 +34,12 @@ const sections: TextContent[] = [
     right: "En&nbsp;el <b>dominio&nbsp;complicado</b> las&nbsp;relaciones de&nbsp;causa-efecto pero ya&nbsp;no son&nbsp;evidentes. " + 
     "<br/><br/>Hay diversas soluciones correctas para una&nbsp;misma problemática: solo <b>personas&nbsp;expertas</b>" + 
     " pueden identificarlas y&nbsp;optar por&nbsp;la&nbsp;más indicada. " + 
-    "<br/><br/><b>Ejemplo:</b> un&nbsp;proyecto de&nbsp;optimizacion logistica en&nbsp;el&nbsp;envio&nbsp;de&nbsp;paquetes."
+    "<br/><br/><span class='text-ldc-complicado'><b>Ejemplo:</b> un&nbsp;proyecto de&nbsp;optimizacion logistica en&nbsp;el&nbsp;envio&nbsp;de&nbsp;paquetes.</span>"
   },
   {
     left: "En&nbsp;el <b>dominio&nbsp;complejo</b> los&nbsp;resultados son&nbsp;impredecibles: las&nbsp;variables son&nbsp;demasiadas y/o difíciles de&nbsp;aislar, y&nbsp;no existe casuística anterior. " + 
     "<br/><br/>Este es&nbsp;el&nbsp;lugar donde priman los&nbsp;enfoques llamados <b>ágiles</b>: la&nbsp;mejor estrategia es&nbsp;realizar pequeños experimentos y&nbsp;ajustar en&nbsp;base a&nbsp;los&nbsp;resultados. " + 
-    "<br/><br/><b>Ejemplo:</b> el&nbsp;desarrollo de&nbsp;nuevos&nbsp;productos o&nbsp;servicios en&nbsp;mercados desconocidos.",
+    "<br/><br/><span class='text-ldc-complejo'><b>Ejemplo:</b> el&nbsp;desarrollo de&nbsp;nuevos&nbsp;productos o&nbsp;servicios en&nbsp;mercados desconocidos.</span>",
     right: ""
   },
   {
@@ -223,7 +223,7 @@ export default function ScrollyTelling() {
       >
         {/* Imagen superior - fondo estático */}
         <div 
-          className="absolute top-[-85vh] left-0 right-0 z-0 pointer-events-none"
+          className="absolute top-[-80vh] left-0 right-0 z-0 pointer-events-none"
           style={{
             opacity: (isContainerPassed && hasReachedFinalStep) ? 0 : imagesOpacity,
             transition: "opacity 0.3s ease-out",
@@ -238,16 +238,16 @@ export default function ScrollyTelling() {
 
         {/* Imagen inferior - fondo estático */}
         <div 
-          className="absolute bottom-[-45vh] left-0 right-0 z-8 pointer-events-none"
+          className="absolute bottom-[-35vh] left-0 right-0 z-8 pointer-events-none"
           style={{
-            opacity: (isContainerPassed && hasReachedFinalStep) ? 0 : imagesOpacity,
+            opacity: imagesOpacity,
             transition: "opacity 0.3s ease-out",
           }}
         >
           <img 
             src={getAssetPath("/scrolly-bot.png")} 
             alt="" 
-            className="w-2/3 h-auto"
+            className="w-3/5 h-auto"
           />
         </div>
 
@@ -346,7 +346,7 @@ export default function ScrollyTelling() {
           {/* Textos finales alrededor de los 4 cuadrantes */}
           {/* Arriba izquierda: Complejo */}
           <div
-            className="absolute top-[20%] left-[10%] w-[162px] italic z-20"
+            className="absolute top-[25%] left-[10%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
@@ -363,7 +363,7 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado */}
           <div
-            className="absolute top-[20%] right-[00%] w-[162px] italic z-20"
+            className="absolute top-[25%] right-[00%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
@@ -442,7 +442,7 @@ export default function ScrollyTelling() {
               transition: "opacity 0.3s ease-out",
             }}
           >
-            <div className="relative w-full mx-auto px-8 flex items-center justify-between">
+            <div className="relative w-full mx-auto px-8 flex items-center justify-between max-w-[1400px]">
               {/* Texto izquierdo */}
               <div
                 className="w-1/4 italic"
@@ -469,7 +469,7 @@ export default function ScrollyTelling() {
                 }}
               >
                 <p 
-                  className="text-[16px] text-right" 
+                  className="text-[16px]" 
                   style={{
                     textWrap: 'balance',
                   }}
