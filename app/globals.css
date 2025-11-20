@@ -8,8 +8,6 @@
   /* LDC Brand Colors */
   --ldc-primary: #1e3a5f;
   --ldc-primary-hover: #2d4d7a;
-  --ldc-primary-dark: #2d4d7a;
-  --ldc-primary-dark-hover: #3d5d8a;
 
   --ldc-simple:#4D9D44;
   --ldc-complejo:#004F6E;
@@ -30,13 +28,6 @@
   --color-ldc-caotico: var(--ldc-caotico);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --ldc-primary: var(--ldc-primary-dark);
-  }
-}
 
 body {
   background: var(--background);
