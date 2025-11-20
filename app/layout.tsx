@@ -61,6 +61,16 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
+        {/* Meta tags adicionales para WhatsApp y otras plataformas */}
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:secure_url" content={ogImageUrl} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="LDC Graduates - La gestión no es sencilla" />
+        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="twitter:image:src" content={ogImageUrl} />
+        
         <style dangerouslySetInnerHTML={{
           __html: `
             @font-face {

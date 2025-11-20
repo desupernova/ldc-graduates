@@ -21,13 +21,13 @@ const triviaQuestions: TriviaQuestion[] = [
   {
     id: 2,
     question: "El sistema tradicional de riego ya no resulta efectivo porque las lluvias son impredecibles y los patrones hídricos cambiaron. Te ponen al frente de una iniciativa para buscar nuevos enfoques.",
-    correctAnswer: "complicado",
+    correctAnswer: "complejo",
     feedback: "Se trata de un entorno complejo. No alcanza con la pericia técnica: hay que experimentar con nuevos esquemas, sensores, inteligencia climática o incluso rediseñar cultivos. Resta aprender aprender haciendo, probando y ajustando.",
   },
   {
     id: 3,
     question: "Participamos de una iniciativa para diseñar una estrategia de seguridad informática. ",
-    correctAnswer: "complejo",
+    correctAnswer: "complicado",
     feedback: "Estamos en un entorno complicado. Las amenazas son conocidas, pero requieren evaluación técnica y decisiones informadas.",
   },
   {
@@ -39,13 +39,13 @@ const triviaQuestions: TriviaQuestion[] = [
   {
     id: 5,
     question: "Estás al frente de un equipo qué tiene a cargo determinar las dosis y combinaciones óptimas de nutrientes según análisis de suelo y rendimiento esperado.",
-    correctAnswer: "simple",
+    correctAnswer: "complicado",
     feedback: "Con seguridad, es un entorno complicado. No hay una receta universal: depende del diagnóstico experto,  una persona capacitada puede identificar soluciones y asesorarnos para optar por la mejor.",
   },
   {
     id: 6,
     question: "La organización quiere entender qué ganancia podría obtener implementando sensores IoT, drones o plataformas de datos para toma de decisiones.",
-    correctAnswer: "complicado",
+    correctAnswer: "complejo",
     feedback: "Parece ser un entorno complejo.  El desafío no es sólo técnico, sino cultural y organizacional. No hay una idea clara de cuál sería el outcome esperable. Las resistencias, los aprendizajes y los efectos emergen a medida que se experimenta con el sistema.", 
   }
 ];
@@ -107,7 +107,9 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
     if (showFeedback) {
       const timer = setTimeout(() => {
         if (currentQuestionIndex < shuffledQuestions.length - 1) {
+          // Primero ocultar la pregunta y el feedback
           setIsTransitioning(true);
+          // Luego cambiar la pregunta después de la animación de fade out
           setTimeout(() => {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setSelectedDomain(null);
@@ -116,12 +118,12 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
             setTimeout(() => {
               setIsTransitioning(false);
             }, 50);
-          }, 2500);
+          }, 300); // Tiempo de la animación de fade out
         } else {
           // Última pregunta completada
           setIsFinished(true);
         }
-      }, 200); // 2.5 segundos
+      }, 5000); // Esperar 2.5 segundos mostrando el feedback
 
       return () => clearTimeout(timer);
     }
@@ -152,9 +154,9 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
               />
             </div>
           </div>
-          <p className={`mt-12 italic  transition-opacity duration-300 ${
-          isTransitioning ? 'opacity-0' : 'opacity-100'
-            }`}>
+          <p className={`mt-12 italic transition-opacity duration-300 ${
+            isTransitioning ? 'opacity-0' : 'opacity-100'
+          }`}>
             {currentQuestion.question}
             <br /><br />
             ¿En qué dominio nos encontramos?
