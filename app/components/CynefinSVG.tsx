@@ -424,7 +424,7 @@ export default function CynefinSVG({
                   <path id="Line 30" d="M1145.65 466.91L939.781 466.911" stroke="black" stroke-width="10" />
                 </g>
               </g>
-              <g id="Group 76_2" filter="url(#filter0_d_2011_2220)">
+              <g id="Group 76_2">
                 <g id="Group 76_3">
                   <path id="Line 28_2" d="M793.888 75.2144L793.888 355.36" stroke="white" />
                   <path id="Line 29_2" d="M672.95 466.855L382.953 466.855" stroke="white" />

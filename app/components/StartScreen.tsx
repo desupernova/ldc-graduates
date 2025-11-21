@@ -147,7 +147,7 @@ export default function StartScreen() {
 
           {/* Contenedor blanco con SVG y texto */}
           <div
-            className="bg-white rounded-[24px] p-8 flex gap-4 mb-[40vh]"
+            className="bg-white rounded-[24px] px-8 py-16 flex gap-4 mb-[40vh]"
           >
             {/* SVG - 1/3 del ancho */}
             <div className="w-1/3 flex-shrink-0">
