@@ -172,9 +172,9 @@ export default function StartScreen() {
             style={{ zIndex: 1000 }}
           >
           {/* Título */}
-          <h1 className="text-[88px] font-serif leading-[72px] mb-24 px-12 block">
-            La gestión <br/>
-            no es sencilla
+          <h1 className="text-[64px] md:text-[88px] font-serif leading-[66px] md:leading-[72px] mb-24 px-12 block">
+            Potenciá <br/>
+            tus ideas
           </h1>
 
           {/* Contenedor blanco con SVG y texto */}

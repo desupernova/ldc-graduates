@@ -52,7 +52,7 @@ export default function TriviaResults({
       <div className="max-w-[900px] mx-auto mt-48 relative flex flex-col md:flex-row justify-between px-9 md:px-0">
         <div className="w-full md:w-2/3">
           {/* Versión móvil */}
-          <h2 ref={scoreTitleRef} className="block md:hidden text-[88px] leading-[88px] mb-8">
+          <h2 ref={scoreTitleRef} className="block md:hidden text-[88px] leading-[72px] mb-12">
             Sacaste{" "}
             <span className="text-ldc-simple">
               {finalScore}/{totalQuestions}
@@ -60,14 +60,14 @@ export default function TriviaResults({
             {" "}puntos
           </h2>
           {/* Versión desktop */}
-          <h2 className="hidden md:block text-[88px] leading-[88px] mb-8">
+          <h2 className="hidden md:block text-[88px] leading-[88px] mb-8 ">
             Tu puntuación fue de{" "}
             <span className="text-ldc-simple">
               {finalScore}/{totalQuestions}
             </span>
             !
           </h2>
-          <p className="text-[18px] leading-relaxed mb-12 italic max-w-[500px]">
+          <p className="text-[18px] md:leading-relaxed leading-6 mb-12 md:mb-12 italic max-w-[500px]">
             <span dangerouslySetInnerHTML={{ __html: resultsText }} />
           </p>
           <a
