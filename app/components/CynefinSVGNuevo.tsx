@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
 interface CynefinSVGProps {
+  className?: string;
 }
 
 export default function CynefinSVG({
+  className,
 }: CynefinSVGProps) {
 
   const [opacitySimple, setOpacitySimple] = useState(0);
@@ -151,7 +153,7 @@ export default function CynefinSVG({
           animation: floatGroup69 5.5s ease-in-out infinite;
         }
       `}</style>
-      <div className="w-full h-full absolute inset-0">
+      <div className={`w-full md:h-full absolute inset-0 max-w-full overflow-hidden ${className}`}>
         <svg 
           width="100%" 
           height="100%" 
@@ -453,7 +455,7 @@ export default function CynefinSVG({
               <circle id="Ellipse 69" cx="791.999" cy="465.15" r="551.636" transform="rotate(-45 791.999 465.15)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 7" />
             </g>
           </g>
-          <g id="Group 586" className="float-animation">
+          <g id="Group 586" className="float-animation md:block hidden">
             <rect id="Rectangle 100" x="247.833" y="117.07" width="183.316" height="104.82" fill="#5D6770" />
             <g id="Group 151">
               <path id="Vector" d="M365.61 151.556C365.855 151.722 366.198 151.615 366.493 151.641C369.04 151.862 371.575 152.457 373.939 153.405V161.137H372.425C371.979 157.607 370.094 154.653 366.536 153.698C361.629 152.38 356.407 153.849 353.577 158.151C348.755 165.48 349.632 182.385 359.92 184.766C365.489 186.055 370.178 184.213 372.379 178.869C372.731 178.014 372.947 177.102 373.307 176.266H374.696L373.943 184.55C368.812 186.949 362.384 187.467 356.859 186.227C350.056 184.702 346.469 179.955 345.515 173.187C343.887 161.64 349.365 152.279 361.572 151.557H365.61V151.556Z" fill="white" />

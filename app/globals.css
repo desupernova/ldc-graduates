@@ -9,6 +9,8 @@
   --ldc-primary: #1e3a5f;
   --ldc-primary-hover: #2d4d7a;
 
+  --ldc-gray: #5D6770;
+
   --ldc-simple:#4D9D44;
   --ldc-complejo:#004F6E;
   --ldc-complicado:#009EDC;
@@ -26,6 +28,7 @@
   --color-ldc-complejo: var(--ldc-complejo);
   --color-ldc-complicado: var(--ldc-complicado);
   --color-ldc-caotico: var(--ldc-caotico);
+  --color-ldc-gray: var(--ldc-gray);
 }
 
 

@@ -87,37 +87,57 @@ export default function StartScreen() {
 
   useEffect(() => {
     const handleParallax = () => {
-      if (parallaxRef.current) {
-        const rect = parallaxRef.current.getBoundingClientRect();
-        const elementTop = rect.top;
-        const windowHeight = window.innerHeight;
-        const elementHeight = rect.height;
+      // Solo aplicar parallax en desktop (md breakpoint: 768px)
+      const isDesktop = window.innerWidth >= 768;
+      
+      if (!parallaxRef.current) return;
+      
+      // En mobile, asegurarse de que no haya transform y salir temprano
+      if (!isDesktop) {
+        parallaxRef.current.style.transform = '';
+        parallaxRef.current.style.willChange = '';
+        return;
+      }
+      
+      // Solo ejecutar parallax en desktop
+      const rect = parallaxRef.current.getBoundingClientRect();
+      const elementTop = rect.top;
+      const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
 
-        // Calcular el offset parallax cuando el elemento está en el viewport
-        // El elemento se mueve más lento que el scroll (efecto parallax)
-        if (elementTop < windowHeight && elementTop > -elementHeight) {
-          // Factor de velocidad parallax: 0.4 significa que se mueve al 40% de la velocidad del scroll
-          const offset = (windowHeight - elementTop) * 0.2;
-          parallaxRef.current.style.transform = `translateY(${offset}px)`;
-        } else if (elementTop >= windowHeight) {
-          // Resetear cuando el elemento está arriba del viewport
-          parallaxRef.current.style.transform = `translateY(0px)`;
-        }
+      // Calcular el offset parallax cuando el elemento está en el viewport
+      // El elemento se mueve más lento que el scroll (efecto parallax)
+      if (elementTop < windowHeight && elementTop > -elementHeight) {
+        // Factor de velocidad parallax: 0.4 significa que se mueve al 40% de la velocidad del scroll
+        const offset = (windowHeight - elementTop) * 0.2;
+        parallaxRef.current.style.transform = `translateY(${offset}px)`;
+        parallaxRef.current.style.willChange = 'transform';
+      } else if (elementTop >= windowHeight) {
+        // Resetear cuando el elemento está arriba del viewport
+        parallaxRef.current.style.transform = `translateY(0px)`;
       }
     };
 
+    // Inicializar: resetear transform en mobile al montar
+    if (parallaxRef.current && window.innerWidth < 768) {
+      parallaxRef.current.style.transform = '';
+      parallaxRef.current.style.willChange = '';
+    }
+
     handleParallax();
     window.addEventListener("scroll", handleParallax, { passive: true });
+    window.addEventListener("resize", handleParallax, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleParallax);
+      window.removeEventListener("resize", handleParallax);
     };
   }, []);
 
   return (
     <>
-      <div className="relative w-full h-screen overflow-x-hidden">
+      <div className="relative w-full h-screen md:overflow-x-hidden">
         {/* Imagen de fondo */}
-        <div className="absolute inset-0 w-full h-full z-0">
+        <div className="hidden md:block absolute inset-0 w-full h-full z-0">
           <Image
             src={getAssetPath("/hero-bg.png")}
             alt="Background"
@@ -126,17 +146,29 @@ export default function StartScreen() {
             priority
           />
         </div>
+
         {/* SVG full width */}
-        <div className="relative z-10 w-full h-full">
-          <CynefinSVG />
+        <div className="relative z-10 md:h-full w-full h-[70%] bg-ldc-gray overflow-visible py-12">
+
+          <div className="block md:hidden absolute inset-0 w-full z-0 h-full">
+            <Image
+              src={getAssetPath("/hero-bg-mobile.png")}
+              alt="Background"
+              fill
+              className="object-cover overflow-visible"
+              priority
+            />
+          </div>
+          <CynefinSVG className="h-[70%] md:h-full" />
+
         </div>
       </div>
 
       {/* Sección de contenido explicativo */}
-      <div className="w-full py-16 relative z-10">
+      <div className="md:mt-0 mt-[-30vh] w-full py-16 relative z-10">
         <div 
             ref={parallaxRef} 
-            className="max-w-[1200px] mx-auto px-4 relative will-change-transform"
+            className="max-w-[1200px] mx-auto px-4 relative"
             style={{ zIndex: 1000 }}
           >
           {/* Título */}
@@ -147,17 +179,17 @@ export default function StartScreen() {
 
           {/* Contenedor blanco con SVG y texto */}
           <div
-            className="bg-white rounded-[24px] px-8 py-16 flex gap-4 mb-[40vh]"
+            className="md:bg-white rounded-[24px] px-12 md:px-8 md:py-16 flex gap-4 mb-[40vh]"
           >
             {/* SVG - 1/3 del ancho */}
-            <div className="w-1/3 flex-shrink-0">
+            <div className="md:block hidden w-1/3 flex-shrink-0">
               <Image src={"cynefin-esquema-blanco.png"}
                 width={250} height={250} alt="Esquema Cynefin" className="mx-auto w-full px-12 py-12" />
 
             </div>
 
             {/* Texto explicativo - 2/3 del ancho */}
-            <div className="w-2/3 text-[18px] leading-relaxed my-auto pr-20">
+            <div className="w-full md:w-2/3 text-[18px] leading-relaxed my-auto md:pr-20">
               <p className="italic">
               Te invitamos a un espacio donde podrás fortalecer tus habilidades para <b>planificar, estimar y gestionar</b> de manera efectiva. 
               En este taller  vas a adquirir tecnicas y herramientas para impulsar proyectos en diferentes tipos de contextos, desarrollando competencias para responder a necesidades cambiantes.  
@@ -179,7 +211,7 @@ export default function StartScreen() {
             <i>Cynefin.</i>
           </h1>
 
-          <p className="text-[18px] leading-relaxed my-auto italic max-w-[800px] text-center mx-auto">A la hora de gestionar, podemos encontrarnos en distintos tipos de dominios: inclusive dentro de LDC, existen proyectos qué exigen enfoques diferenciados de acuerdo al contexto. 
+          <p className="text-[18px] leading-relaxed my-auto italic md:px-0 px-12 max-w-[800px] text-center mx-auto">A la hora de gestionar, podemos encontrarnos en distintos tipos de dominios: inclusive dentro de LDC, existen proyectos qué exigen enfoques diferenciados de acuerdo al contexto. 
           </p>
 
           {/* Contenedor de scrollytelling con 4 secciones */}
