@@ -147,11 +147,42 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
     <div className="relative mb-24" style={{ minHeight: '400px' }}>
       <div 
         key={currentQuestionIndex}
-        className={`bg-white rounded-[24px] p-8 pl-20 pt-20 pb-16 flex gap-16 relative z-10 will-change-transform max-w-[1200px] mx-auto overflow-hidden ${isFinished ? 'mb-12' : ''}`}
+        className={`bg-white rounded-[24px] p-8 md:p-8 md:pl-20 md:pt-20 pb-16 flex 
+          flex-col md:flex-row gap-8 md:gap-16 relative z-10 will-change-transform max-w-[1200px] 
+          md:mx-auto mx-4  overflow-hidden ${isFinished ? 'mb-12' : ''}`}
       >
-        {/* Texto de la pregunta - 2/3 del ancho */}
-        <div className={`w-2/3 text-[18px] leading-relaxed mt-4`}>
-          <div className="mb-4">
+        {/* Seguidor de progreso - arriba en móvil, dentro del texto en desktop */}
+        <div className="md:hidden mb-4 order-0">
+          <div className="text-sm text-gray-500 mb-2">
+            Pregunta {currentQuestionIndex + 1} de {shuffledQuestions.length}
+          </div>
+          {/* Barra de progreso */}
+          <div className="w-full bg-gray-200 h-2 overflow-hidden">
+            <div 
+              className="bg-black h-2 rounded-full transition-all duration-300 ease-out"
+              style={{ 
+                width: `${((currentQuestionIndex + 1) / shuffledQuestions.length) * 100}%` 
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Selector Cynefin - arriba en móvil (25% más chico), 1/3 del ancho en desktop */}
+        <div className="w-full md:w-1/3 flex-shrink-0 order-1 md:order-2 h-fit">
+          <div className="scale-75 md:scale-100 origin-top md:origin-center">
+            <CynefinSelector 
+              handleClick={handleAnswer}
+              disabled={showFeedback || isFinished}
+              highlightDomain={showFeedback || isFinished ? (currentQuestion.correctAnswer as any) : null}
+              selectedDomain={showFeedback || isFinished ? (selectedDomain as any) : null}
+            />
+          </div>
+        </div>
+
+        {/* Texto de la pregunta - abajo en móvil, 2/3 del ancho en desktop */}
+        <div className={`w-full md:w-2/3 text-[18px] leading-6 md:leading-relaxed md:mt-4 mt-[-70px] order-2 md:order-1`}>
+          {/* Seguidor de progreso - solo visible en desktop */}
+          <div className="hidden md:block mb-4">
             <div className="text-sm text-gray-500 mb-2">
               Pregunta {currentQuestionIndex + 1} de {shuffledQuestions.length}
             </div>
@@ -165,7 +196,7 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
               />
             </div>
           </div>
-          <p className={`mt-12 italic transition-opacity duration-300 ${
+          <p className={`md:mt-12 italic transition-opacity duration-300 ${
             isTransitioning ? 'opacity-0' : 'opacity-100'
           }`}>
             {currentQuestion.question}
@@ -211,16 +242,6 @@ export default function Trivia({ resultsText = "En apenas unos minutos ya fortal
               )}
             </div>
           )}
-        </div>
-
-        {/* Selector Cynefin - 1/3 del ancho */}
-        <div className="w-1/3 flex-shrink-0">
-          <CynefinSelector 
-            handleClick={handleAnswer}
-            disabled={showFeedback || isFinished}
-            highlightDomain={showFeedback || isFinished ? (currentQuestion.correctAnswer as any) : null}
-            selectedDomain={showFeedback || isFinished ? (selectedDomain as any) : null}
-          />
         </div>
       </div>
 

@@ -165,7 +165,7 @@ export default function StartScreen() {
       </div>
 
       {/* Sección de contenido explicativo */}
-      <div className="md:mt-0 mt-[-30vh] w-full py-16 relative z-10">
+      <div className="md:mt-0 mt-[-30vh] w-full py-24 md:py-16 relative z-10">
         <div 
             ref={parallaxRef} 
             className="max-w-[1200px] mx-auto px-4 relative"
@@ -222,20 +222,21 @@ export default function StartScreen() {
           {/* Fondo sticky que scrollea con el contenido y luego se queda fijo en la parte inferior */}
           
 
-          <div className="flex gap-8 max-w-[1100px] mx-auto mb-32 mt-[50vh]">
+          <div className="flex flex-col md:flex-row gap-8 max-w-[1100px] mx-auto mb-32 mt-[50vh] px-12 md:px-0">
             {/* Texto explicativo - 2/3 del ancho */}
-            <div className="w-2/3 text-[18px] leading-relaxed my-auto">
+            <div className="w-full md:w-2/3 text-[18px] leading-relaxed my-auto">
               <p className="italic">
                 Ahora bien: en la vida real <b>no siempre es tan fácil darse cuenta en qué dominio estamos</b>. Por eso te proponemos ver algunos ejemplos y, de paso, poner a prueba tu mirada con una pequeña trivia.<br /><br />
                 A continuacion vas a encontrar <b>seis proyectos distintos</b>. Tu desafío es identificar en qué dominio se ubica cada uno. 
               </p>
             </div>
-            <div className="w-1/3 flex-shrink-0 p-10">
+            <div className="w-full md:w-1/3 flex-shrink-0 p-4 md:p-10">
               <video 
                 ref={videoRef}
                 autoPlay 
                 muted 
                 playsInline
+                className="w-full"
               >
                 <source src={getAssetPath("/instrucciones.webm")} type="video/webm" />
                 <source src={getAssetPath("/instrucciones.mp4")} type="video/mp4" /> 

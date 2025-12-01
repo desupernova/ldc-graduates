@@ -46,12 +46,21 @@ export default function TriviaResults({
         alt="Ilustración"
         height={300}
         width={250}
-        className="object-cover absolute top-0 left-0"
+        className="hidden md:block object-cover absolute top-0 left-0"
       />
 
-      <div className="max-w-[900px] mx-auto mt-48 relative flex justify-between">
-        <div className="w-2/3">
-          <h2 ref={scoreTitleRef} className="text-[88px] leading-[88px] mb-8">
+      <div className="max-w-[900px] mx-auto mt-48 relative flex flex-col md:flex-row justify-between px-9 md:px-0">
+        <div className="w-full md:w-2/3">
+          {/* Versión móvil */}
+          <h2 ref={scoreTitleRef} className="block md:hidden text-[88px] leading-[88px] mb-8">
+            Sacaste{" "}
+            <span className="text-ldc-simple">
+              {finalScore}/{totalQuestions}
+            </span>
+            {" "}puntos
+          </h2>
+          {/* Versión desktop */}
+          <h2 className="hidden md:block text-[88px] leading-[88px] mb-8">
             Tu puntuación fue de{" "}
             <span className="text-ldc-simple">
               {finalScore}/{totalQuestions}
@@ -66,13 +75,13 @@ export default function TriviaResults({
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-ldc-simple hover:opacity-90 text-white 
-            w-full max-w-[300px] text-center
+            w-full md:max-w-[300px] text-center
             px-6 py-2 rounded-xs transition-opacity duration-200 font-medium"
           >
             Agendar el evento
           </a>
         </div>
-        <div className="w-1/3">
+        <div className="hidden md:block w-1/3">
           <Image
             src={getAssetPath("/puntuacion.png")}
             alt="Ilustración"
