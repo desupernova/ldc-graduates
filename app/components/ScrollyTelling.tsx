@@ -61,9 +61,20 @@ export default function ScrollyTelling() {
   const [finalTextsOpacity, setFinalTextsOpacity] = useState(0);
   const [isContainerPassed, setIsContainerPassed] = useState(false);
   const [hasReachedFinalStep, setHasReachedFinalStep] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const desordenTextRef = useRef<HTMLDivElement | null>(null);
+
+  // Detectar si es móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -187,16 +198,31 @@ export default function ScrollyTelling() {
         const elementCenter = textRect.top + textRect.height / 2;
         const distanceFromCenter = Math.abs(elementCenter - windowCenter);
         
-        // Calcular opacidad: máxima cuando está en el centro, muy baja cuando no está en foco
-        const focusRange = windowHeight * 0.4;
         let opacity;
         
-        if (distanceFromCenter < focusRange) {
-          opacity = 1 - (distanceFromCenter / focusRange) * 0.2;
+        if (isMobile) {
+          // En móvil: usar la misma lógica que Desorden - basada en distancia al centro
+          // Esto hace que los textos se comporten igual que el texto de Desorden
+          const focusRange = windowHeight * 0.4;
+          
+          if (distanceFromCenter < focusRange) {
+            opacity = 1 - (distanceFromCenter / focusRange) * 0.2;
+          } else {
+            const extraDistance = distanceFromCenter - focusRange;
+            const fadeRange = windowHeight * 0.3;
+            opacity = Math.max(0, 0.8 - (extraDistance / fadeRange) * 0.7);
+          }
         } else {
-          const extraDistance = distanceFromCenter - focusRange;
-          const fadeRange = windowHeight * 0.3;
-          opacity = Math.max(0, 0.8 - (extraDistance / fadeRange) * 0.7);
+          // Desktop: comportamiento original
+          const focusRange = windowHeight * 0.4;
+          
+          if (distanceFromCenter < focusRange) {
+            opacity = 1 - (distanceFromCenter / focusRange) * 0.2;
+          } else {
+            const extraDistance = distanceFromCenter - focusRange;
+            const fadeRange = windowHeight * 0.3;
+            opacity = Math.max(0, 0.8 - (extraDistance / fadeRange) * 0.7);
+          }
         }
         
         newOpacities.push(Math.max(0, Math.min(1, opacity)));
@@ -209,7 +235,7 @@ export default function ScrollyTelling() {
     handleScroll(); // Llamar una vez al montar
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
   return (
     <div 
@@ -252,24 +278,28 @@ export default function ScrollyTelling() {
         </div>
 
         <div 
-          className="relative w-full max-w-[1080px] mx-auto px-8 z-8"
+          className="relative w-full max-w-[1080px] mx-auto px-2 md:px-0 z-8 overflow-hidden"
           style={{
             transition: "opacity 0.3s ease-out",
             opacity: isContainerPassed && hasReachedFinalStep ? 0 : 1,
           }}
         >
           {/* Círculo central */}
-          <div className="flex justify-center items-center w-6/10 mx-auto">
-            <ScrollyCirculo 
-              opacities={opacities} 
-              isFirstStep={isFirstStep} 
-              isFinalStep={isFinalStep} 
-              desordenOpacity={desordenOpacity} />
+          <div className="flex justify-center items-center w-full mx-auto -translate-y-[10%] md:translate-y-0">
+            <div className="w-[45vw] max-w-[180px] md:w-5/10 md:max-w-none flex justify-center">
+              <div className="scale-[0.3] md:scale-[0.81] origin-center">
+                <ScrollyCirculo 
+                  opacities={opacities} 
+                  isFirstStep={isFirstStep} 
+                  isFinalStep={isFinalStep} 
+                  desordenOpacity={desordenOpacity} />
+              </div>
+            </div>
           </div>
 
           {/* Texto "Desorden" arriba en el medio durante el segundo paso */}
           <div
-            className="bg-blue w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1 italic"
+            className="bg-blue w-full h-full absolute top-[40%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1 italic"
             style={{
               opacity: desordenOpacity,
               transition: "opacity 0.3s ease-out",
@@ -285,7 +315,8 @@ export default function ScrollyTelling() {
           {/* Títulos alrededor del círculo */}
           {/* Arriba izquierda: Complejo (sección 2) */}
           <div
-            className="absolute top-[7%] left-[50%] -translate-x-1/1 pr-12 italic"
+            className="absolute top-[15%] left-1/2 -translate-x-1/2 italic text-center w-full 
+            md:top-[5%] md:translate-x-0 md:left-[23%] md:pr-6 md:text-right md:w-auto"
             style={{
               opacity: (opacities[2] || 0),
               transition: "opacity 0.3s ease-out",
@@ -300,14 +331,15 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado (sección 1) */}
           <div
-            className="absolute top-[7%] left-[50%] pl-12 italic"
+            className="absolute top-[15%] left-1/2 -translate-x-1/2 italic text-center w-full 
+            md:translate-x-0 md:top-[5%] md:right-[5%] md:right-auto md:pl-6 md:text-left md:w-auto"
             style={{
               opacity: (opacities[1] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[61px] font-serif text-right text-ldc-complicado"
+              className="text-[61px] font-serif md:text-left text-ldc-complicado"
             >
               Complicado
             </h2>
@@ -315,14 +347,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo derecha: Simple (sección 0) */}
           <div
-            className="absolute bottom-[12%] left-[50%] pl-12 italic"
+            className="absolute top-[15%] left-1/2 -translate-x-1/2 md:top-auto md:bottom-[12%] md:left-[50%] md:translate-x-[15%] italic text-center md:text-right w-full md:w-auto"
             style={{
               opacity: (opacities[0] || 0),
               transition: "opacity 0.3s ease-out",
             }}
           >
             <h2 
-              className="text-[61px] font-serif text-right text-ldc-simple"
+              className="text-[61px] font-serif md:text-right text-ldc-simple"
             >
               Simple
             </h2>
@@ -330,7 +362,9 @@ export default function ScrollyTelling() {
 
           {/* Abajo izquierda: Caótico (sección 3) */}
           <div
-            className="absolute bottom-[12%] left-[50%] -translate-x-1/1 pr-12 italic"
+            className="absolute top-[15%] left-1/2 -translate-x-1/2 italic text-center w-full 
+            md:top-auto md:bottom-[10%] md:left-[50%] md:-translate-x-1/1
+            md:text-right md:w-auto"
             style={{
               opacity: (opacities[3] || 0),
               transition: "opacity 0.3s ease-out",
@@ -346,14 +380,14 @@ export default function ScrollyTelling() {
           {/* Textos finales alrededor de los 4 cuadrantes */}
           {/* Arriba izquierda: Complejo */}
           <div
-            className="absolute top-[25%] left-[10%] w-[162px] italic z-20"
+            className="absolute top-[10%] md:top-[25%] left-[10%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-complejo leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-complejo leading-3 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Impredecible</li>
               <li>Enfoques ágiles</li>
@@ -363,14 +397,14 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado */}
           <div
-            className="absolute top-[25%] right-[00%] w-[162px] italic z-20"
+            className="absolute top-[10%] md:top-[25%] right-[00%] w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-complicado leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-complicado leading-3 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Causa-efecto no evidentes</li>
               <li>Varias soluciones</li>
@@ -386,7 +420,7 @@ export default function ScrollyTelling() {
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-simple leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-simple leading-3 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Problemáticas univocas</li>
               <li>Soluciones  claras</li>
@@ -403,7 +437,7 @@ export default function ScrollyTelling() {
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-caotico leading-5 list-disc flex flex-col gap-4"
+              className="text-[16px] text-ldc-caotico leading-3 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Situaciones de crisis</li>
               <li>Velocidad sobre robustez</li>
@@ -434,7 +468,7 @@ export default function ScrollyTelling() {
             ref={(el) => {
               textRefs.current[index] = el;
             }}
-            className="absolute left-0 right-0 flex items-center justify-center"
+            className="absolute left-0 right-0 flex items-center justify-center z-20"
             style={{
               top: `${sectionTop}vh`,
               height: `${sectionHeight}vh`,
@@ -442,40 +476,44 @@ export default function ScrollyTelling() {
               transition: "opacity 0.3s ease-out",
             }}
           >
-            <div className="relative w-full mx-auto px-8 flex items-center justify-between max-w-[1400px]">
-              {/* Texto izquierdo */}
-              <div
-                className="w-1/4 italic"
-                style={{ 
-                  transform: `translateX(${opacity < 0.1 ? -20 : 0}px)`,
-                  transition: "transform 0.3s ease-out",
-                }}
-              >
-                <p 
-                  className="text-[16px] text-left" 
-                  style={{
-                    textWrap: 'balance',
+            <div className="relative w-full mx-auto px-6 md:px-8 flex items-center justify-center md:justify-between max-w-[1400px]">
+              {/* En móvil: texto centrado igual que Desorden */}
+              {/* En desktop: mantener comportamiento original con left y right */}
+              {section.left && (
+                <div
+                  className="w-full md:w-1/4 italic text-center md:text-left mb-4 md:mb-0 px-6 md:px-0 md:mr-auto"
+                  style={{ 
+                    transform: isMobile ? `translateY(${opacity < 0.1 ? 20 : 0}px)` : `translateX(${opacity < 0.1 ? -20 : 0}px)`,
+                    transition: "transform 0.3s ease-out",
                   }}
-                  dangerouslySetInnerHTML={{ __html: section.left }}
-                />
-              </div>
+                >
+                  <p 
+                    className="text-[16px] leading-relaxed md:leading-normal w-full md:w-auto md:max-w-none mx-auto md:mx-0" 
+                    style={{
+                      textWrap: 'balance',
+                    }}
+                    dangerouslySetInnerHTML={{ __html: section.left }}
+                  />
+                </div>
+              )}
 
-              {/* Texto derecho */}
-              <div
-                className="w-1/4 italic"
-                style={{ 
-                  transform: `translateX(${opacity < 0.1 ? 20 : 0}px)`,
-                  transition: "transform 0.3s ease-out",
-                }}
-              >
-                <p 
-                  className="text-[16px]" 
-                  style={{
-                    textWrap: 'balance',
+              {section.right && (
+                <div
+                  className="w-full md:w-1/4 italic text-center md:text-right px-6 md:px-0 md:ml-auto"
+                  style={{ 
+                    transform: isMobile ? `translateY(${opacity < 0.1 ? 20 : 0}px)` : `translateX(${opacity < 0.1 ? 20 : 0}px)`,
+                    transition: "transform 0.3s ease-out",
                   }}
-                  dangerouslySetInnerHTML={{ __html: section.right }}
-                />
-              </div>
+                >
+                  <p 
+                    className="text-[16px] leading-relaxed md:leading-normal w-full md:w-auto md:max-w-none mx-auto md:mx-0" 
+                    style={{
+                      textWrap: 'balance',
+                    }}
+                    dangerouslySetInnerHTML={{ __html: section.right }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         );
@@ -486,7 +524,7 @@ export default function ScrollyTelling() {
         ref={(el) => {
           desordenTextRef.current = el;
         }}
-        className="absolute left-0 right-0 flex items-center justify-center"
+        className="absolute left-0 right-0 flex items-center justify-center z-20"
         style={{
           top: "90vh",
           height: "90vh",
@@ -494,17 +532,17 @@ export default function ScrollyTelling() {
           transition: "opacity 0.3s ease-out",
         }}
       >
-        <div className="relative w-full mx-auto px-8 flex items-center justify-between">
+        <div className="relative w-full mx-auto px-6 md:px-8 flex items-center justify-between max-w-[1400px]">
           {/* Texto centrado debajo del título Desorden */}
           <div
-            className="w-full italic text-center"
+            className="w-full italic text-center px-6 md:px-0"
               style={{
               transform: `translateY(${desordenTextOpacity < 0.1 ? 20 : 0}px)`,
               transition: "transform 0.3s ease-out",
             }}
           >
             <p 
-              className="text-[16px] leading-relaxed w-[500px] mx-auto" 
+              className="text-[16px] leading-relaxed w-full md:w-[500px] mx-auto" 
               dangerouslySetInnerHTML={{ __html: "Esta es la zona más peligrosa: no entendemos en qué dominio estamos, y nos exponemos a actuar de manera diferente a la qué se necesita para resolver ciertos problemas. <br/><br/>En estos casos, todos nuestros esfuerzos deben estar centrados en <b>salir de este espacio</b> a uno mejor identificado, para posteriormente adoptar el enfoque correspondiente. " }}
             />
           </div>
