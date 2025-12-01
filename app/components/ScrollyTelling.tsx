@@ -245,7 +245,7 @@ export default function ScrollyTelling() {
     >
       {/* Contenedor fijo para el círculo y títulos */}
       <div 
-        className="sticky top-0 h-screen flex items-center justify-center pointer-events-none z-10"
+        className="sticky top-[-40px] md:top-0 h-screen flex items-center justify-center pointer-events-none z-10"
       >
         {/* Imagen superior - fondo estático */}
         <div 
@@ -380,14 +380,14 @@ export default function ScrollyTelling() {
           {/* Textos finales alrededor de los 4 cuadrantes */}
           {/* Arriba izquierda: Complejo */}
           <div
-            className="absolute top-[10%] md:top-[25%] left-[10%] w-[162px] italic z-20"
+            className="absolute top-[14%] md:top-[25%] left-[10%] w-[140px] md:w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-complejo leading-3 md:leading-5 list-disc flex flex-col gap-4"
+              className="text-[15px] md:text-[16px] text-ldc-complejo leading-4 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Impredecible</li>
               <li>Enfoques ágiles</li>
@@ -397,14 +397,14 @@ export default function ScrollyTelling() {
 
           {/* Arriba derecha: Complicado */}
           <div
-            className="absolute top-[10%] md:top-[25%] right-[00%] w-[162px] italic z-20"
+            className="absolute top-[14%] md:top-[25%] right-[0%] w-[140px] md:w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-complicado leading-3 md:leading-5 list-disc flex flex-col gap-4"
+              className="text-[15px] md:text-[16px] text-ldc-complicado leading-4 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Causa-efecto no evidentes</li>
               <li>Varias soluciones</li>
@@ -413,14 +413,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo derecha: Simple */}
           <div
-            className="absolute bottom-[30%] right-[0%] w-[162px] italic z-20"
+            className="absolute bottom-[35%] right-[0%] w-[140px] md:w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-simple leading-3 md:leading-5 list-disc flex flex-col gap-4"
+              className="text-[15px] md:text-[16px] text-ldc-simple leading-4 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Problemáticas univocas</li>
               <li>Soluciones  claras</li>
@@ -430,14 +430,14 @@ export default function ScrollyTelling() {
 
           {/* Abajo izquierda: Caótico */}
           <div
-            className="absolute bottom-[30%] left-[10%] w-[162px] italic z-20"
+            className="absolute bottom-[35%] md:bottom-[30%] left-[10%] w-[140px] md:w-[162px] italic z-20"
             style={{
               opacity: finalTextsOpacity,
               transition: "opacity 0.3s ease-out",
             }}
           >
             <ul 
-              className="text-[16px] text-ldc-caotico leading-3 md:leading-5 list-disc flex flex-col gap-4"
+              className="text-[15px] md:text-[16px] text-ldc-caotico leading-4 md:leading-5 list-disc flex flex-col gap-4"
             >
               <li>Situaciones de crisis</li>
               <li>Velocidad sobre robustez</li>
