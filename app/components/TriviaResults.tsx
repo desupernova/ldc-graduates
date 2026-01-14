@@ -71,7 +71,7 @@ export default function TriviaResults({
             <span dangerouslySetInnerHTML={{ __html: resultsText }} />
           </p>
           <a
-            href="https://dew1-share.percipio.com/cd/iP5G-fvHd"
+            href="https://dew1-share.percipio.com/cd/xnmUXEEk7"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-ldc-simple hover:opacity-90 text-white 

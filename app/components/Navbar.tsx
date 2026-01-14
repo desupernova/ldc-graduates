@@ -44,7 +44,7 @@ export default function Navbar() {
         <p className="text-lg md:text-xl text-ldc-complejo md:mr-6">LDC<span className="text-ldc-simple">.</span></p>
 
         <a
-          href="https://dew1-share.percipio.com/cd/iP5G-fvHd"
+          href="https://dew1-share.percipio.com/cd/xnmUXEEk7"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-ldc-simple hover:opacity-90 text-white md:px-6 md:py-2 px-3 py-1.5 rounded-xs transition-opacity duration-200 font-medium flex items-center justify-center"
