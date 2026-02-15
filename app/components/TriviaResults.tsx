@@ -70,16 +70,6 @@ export default function TriviaResults({
           <p className="text-[18px] md:leading-relaxed leading-6 mb-12 md:mb-12 italic max-w-[500px]">
             <span dangerouslySetInnerHTML={{ __html: resultsText }} />
           </p>
-          <a
-            href="https://dew1-share.percipio.com/cd/xnmUXEEk7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-ldc-simple hover:opacity-90 text-white 
-            w-full md:max-w-[300px] text-center
-            px-6 py-2 rounded-xs transition-opacity duration-200 font-medium"
-          >
-            Agendar el evento
-          </a>
         </div>
         <div className="hidden md:block w-1/3">
           <Image
