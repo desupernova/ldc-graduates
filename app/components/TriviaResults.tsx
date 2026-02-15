@@ -67,9 +67,6 @@ export default function TriviaResults({
             </span>
             !
           </h2>
-          <p className="text-[18px] md:leading-relaxed leading-6 mb-12 md:mb-12 italic max-w-[500px]">
-            <span dangerouslySetInnerHTML={{ __html: resultsText }} />
-          </p>
         </div>
         <div className="hidden md:block w-1/3">
           <Image
